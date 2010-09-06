@@ -10,8 +10,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.MIDlet;
 
 /**
- * @author David Almeida Pitanguy
- * date 06/09/2010
+ * @author David Almeida Pitanguy date 06/09/2010
  */
 public class PuzzleCanvas extends Canvas implements CommandListener {
 
@@ -19,16 +18,19 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 	 * Quantidade de movimentos a fazer para embaralhar
 	 */
 	private static final int VEZES_EMBARALHAR = 1000;
-	
+
 	/**
 	 * Quantidade de pedras por coluna
 	 */
 	private static final int PEDRAS_POR_COLUNA = 4;
-	
+
 	private static final String TITULO = "15-Puzzle";
 
 	private MIDlet midlet;
+
+	private Command embaralhar;
 	private Command sair;
+
 	private int[][] pecas = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 },
 			{ 9, 10, 11, 12 }, { 13, 14, 15, 0 } };
 
@@ -41,7 +43,8 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 			/ PEDRAS_POR_COLUNA : getHeight() / PEDRAS_POR_COLUNA;
 
 	/**
-	 * Construtor responsavel por fazer todo o necessario para inicializar o jogo.
+	 * Construtor responsavel por fazer todo o necessario para inicializar o
+	 * jogo.
 	 * 
 	 * @param midlet
 	 */
@@ -49,16 +52,21 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 		setTitle(TITULO);
 		this.midlet = midlet;
 
+		embaralhar = new Command("Embaralhar", Command.SCREEN, 1);
 		sair = new Command("Sair", Command.EXIT, 1);
 
+		addCommand(embaralhar);
 		addCommand(sair);
 		setCommandListener(this);
-		
+
 		embaralhar();
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.microedition.lcdui.Canvas#paint(javax.microedition.lcdui.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.Canvas#paint(javax.microedition.lcdui.Graphics)
 	 */
 	protected void paint(Graphics g) {
 
@@ -89,12 +97,18 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.microedition.lcdui.CommandListener#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.CommandListener#commandAction(javax.microedition
+	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command c, Displayable d) {
 		if (c == this.sair) {
 			midlet.notifyDestroyed();
+		} else if (c == this.embaralhar) {
+			embaralhar();
 		}
 	}
 
@@ -138,16 +152,22 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 		pecas[posicaoDoZeroX][posicaoDoZeroY] = 0;
 
 		repaint();
+
+		System.out.println(verificaGanhou());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.lcdui.Canvas#keyPressed(int)
 	 */
 	protected void keyPressed(int keyCode) {
 		alterarPosicaoPecas(getGameAction(keyCode));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.lcdui.Canvas#pointerReleased(int, int)
 	 */
 	protected void pointerReleased(int x, int y) {
@@ -165,7 +185,9 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
 	 */
 	protected void pointerPressed(int x, int y) {
@@ -190,7 +212,7 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 
 				if (atual == ultimo) {
 					qtdUltimo++;
-				}else{
+				} else {
 					qtdUltimo = 0;
 				}
 			} while (qtdUltimo >= 4);
@@ -200,6 +222,7 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 			ultimo = atual;
 		}
 
+		repaint();
 	}
 
 	/**
@@ -228,4 +251,22 @@ public class PuzzleCanvas extends Canvas implements CommandListener {
 		}
 	}
 
+	/**
+	 * @return Retorna verdadeiro de ganhou e falso caso contrario
+	 */
+	private boolean verificaGanhou() {
+
+		int aux = 0;
+
+		for (int i = 0; i < pecas.length; i++) {
+			for (int j = 0; j < pecas[i].length; j++) {
+				aux++;
+				if ((aux <= 15) && (pecas[i][j] != aux)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 }
