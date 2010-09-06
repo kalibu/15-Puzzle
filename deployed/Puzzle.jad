@@ -1,8 +1,0 @@
-MIDlet-1: PuzzleMIDlet,,br.com.caelum.PuzzleMIDlet
-MIDlet-Jar-Size: 2964
-MIDlet-Jar-URL: Puzzle.jar
-MIDlet-Name: Puzzle
-MIDlet-Vendor: David
-MIDlet-Version: 1.0.0
-MicroEdition-Configuration: CLDC-1.1
-MicroEdition-Profile: MIDP-2.0

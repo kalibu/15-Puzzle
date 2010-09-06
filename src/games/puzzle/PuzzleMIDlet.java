@@ -7,7 +7,7 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 /**
  * @author David Almeida Pitanguy
- * @date 06/09/2010
+ * date 06/09/2010
  */
 public class PuzzleMIDlet extends MIDlet {
 

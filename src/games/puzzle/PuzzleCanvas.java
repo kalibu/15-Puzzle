@@ -11,7 +11,7 @@ import javax.microedition.midlet.MIDlet;
 
 /**
  * @author David Almeida Pitanguy
- * @date 06/09/2010
+ * date 06/09/2010
  */
 public class PuzzleCanvas extends Canvas implements CommandListener {
 
