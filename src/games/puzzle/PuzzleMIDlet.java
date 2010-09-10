@@ -7,7 +7,7 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 /**
  * @author David Almeida Pitanguy
- * date 06/09/2010
+ * data 06/09/2010
  */
 public class PuzzleMIDlet extends MIDlet {
 
@@ -17,24 +17,30 @@ public class PuzzleMIDlet extends MIDlet {
 	 * Construtor responsavel por definir a tela que ira aparecer.
 	 */
 	public PuzzleMIDlet() {
-		canvas = new PuzzleCanvas(this);
+		canvas = new Puzzle(this);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.midlet.MIDlet#destroyApp(boolean)
 	 */
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.midlet.MIDlet#pauseApp()
 	 */
 	protected void pauseApp() {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.midlet.MIDlet#startApp()
 	 */
 	protected void startApp() throws MIDletStateChangeException {
