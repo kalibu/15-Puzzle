@@ -1,4 +1,4 @@
-package games.puzzle;
+package puzzle.principal;
 
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
@@ -6,8 +6,7 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 /**
- * @author David Almeida Pitanguy
- * data 06/09/2010
+ * @author David Almeida Pitanguy data 06/09/2010
  */
 public class PuzzleMIDlet extends MIDlet {
 

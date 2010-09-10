@@ -1,4 +1,4 @@
-package games.puzzle;
+package puzzle.principal;
 
 import java.util.Random;
 
@@ -7,8 +7,7 @@ import javax.microedition.lcdui.Canvas;
 /**
  * Classe responsavel por cuidar de todos os movimentos.
  * 
- * @author David Almeida Pitanguy
- * data 10/09/2010
+ * @author David Almeida Pitanguy data 10/09/2010
  */
 public class Movimentos {
 
@@ -45,7 +44,8 @@ public class Movimentos {
 	 */
 	private void alterarPosicaoPecas(int codeGameAction) {
 		switch (codeGameAction) {
-		case (Canvas.UP): {
+		case (Canvas.UP):
+		case (Canvas.KEY_NUM2): {
 			if (jogo.getPosicaoDoZeroX() + 1 < Puzzle.PECAS_POR_COLUNA) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
@@ -54,7 +54,8 @@ public class Movimentos {
 			}
 			break;
 		}
-		case (Canvas.DOWN): {
+		case (Canvas.DOWN):
+		case (Canvas.KEY_NUM8): {
 			if (jogo.getPosicaoDoZeroX() - 1 > -1) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
@@ -63,7 +64,8 @@ public class Movimentos {
 			}
 			break;
 		}
-		case (Canvas.LEFT): {
+		case (Canvas.LEFT):
+		case (Canvas.KEY_NUM4): {
 			if (jogo.getPosicaoDoZeroY() + 1 < Puzzle.PECAS_POR_COLUNA) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
@@ -72,7 +74,8 @@ public class Movimentos {
 			}
 			break;
 		}
-		case (Canvas.RIGHT): {
+		case (Canvas.RIGHT):
+		case (Canvas.KEY_NUM6): {
 			if (jogo.getPosicaoDoZeroY() - 1 > -1) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo

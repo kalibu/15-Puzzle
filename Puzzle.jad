@@ -2,6 +2,6 @@ MIDlet-Version: 1.0.0
 MIDlet-Vendor: David Almeida Pitanguy
 MIDlet-Jar-URL: Puzzle.jar
 MicroEdition-Configuration: CLDC-1.1
-MIDlet-1: PuzzleMIDlet,,games.puzzle.PuzzleMIDlet
+MIDlet-1: 15-Puzzle,/15-puzzle.png,games.puzzle.PuzzleMIDlet
 MicroEdition-Profile: MIDP-2.0
 MIDlet-Name: Puzzle

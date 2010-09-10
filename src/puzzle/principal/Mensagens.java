@@ -1,4 +1,4 @@
-package games.puzzle;
+package puzzle.principal;
 
 /**
  * Classe responsavel por centralizar as mensagens do jogo.
@@ -14,6 +14,7 @@ public class Mensagens {
 	//Botões
 	public static final String EMBARALHAR = "Embaralhar";
 	public static final String SAIR = "Sair";
+	public static final String VOLTAR = "Voltar";
 	
 	//Mensagens
 	public static final String PARABENS = "Parabens vc ganhou!";

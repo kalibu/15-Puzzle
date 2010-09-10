@@ -1,6 +1,5 @@
-package games.puzzle;
+package puzzle.principal;
 
-import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -9,19 +8,23 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.MIDlet;
 
+import puzzle.parabens.Parabens;
+
 /**
  * Classe principal, contem toda a regra do jogo.
  * 
- * @author David Almeida Pitanguy
- * data 06/09/2010
+ * @author David Almeida Pitanguy data 06/09/2010
  */
 public class Puzzle extends Canvas implements CommandListener {
 
-	// Quantidade de movimentos a fazer para embaralhar
-	public static final int VEZES_EMBARALHAR = 1000;
 
 	// Quantidade de pedras por coluna
 	public static final int PECAS_POR_COLUNA = 4;
+	
+	// Quantidade de movimentos a fazer para embaralhar
+	public static final int VEZES_EMBARALHAR = PECAS_POR_COLUNA * 1000;
+	
+	//Altura e largura das pecas
 	public final int alturaPeca = getHeight() / PECAS_POR_COLUNA;
 	public final int larguraPeca = getWidth() / PECAS_POR_COLUNA;
 
@@ -127,7 +130,14 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * @see javax.microedition.lcdui.Canvas#keyPressed(int)
 	 */
 	protected void keyPressed(int keyCode) {
-		movimentos.realizaJogada(getGameAction(keyCode));
+		// verifica se tecla selecionada é igual a: 2, 4, 6, 8 que são os
+		// movimentos alem do direcional.
+		if ((keyCode == Canvas.KEY_NUM2) || (keyCode == Canvas.KEY_NUM4)
+				|| (keyCode == Canvas.KEY_NUM6) || (keyCode == Canvas.KEY_NUM8)) {
+			movimentos.realizaJogada(keyCode);
+		} else {
+			movimentos.realizaJogada(getGameAction(keyCode));
+		}
 	}
 
 	/*
@@ -174,9 +184,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * Animação para o ganhador
 	 */
 	public void ganhou() {
-		Alert a = new Alert(Mensagens.PARABENS);
-		a.setTimeout(Alert.FOREVER);
-		Display.getDisplay(midlet).setCurrent(a, this);
+		Display.getDisplay(this.midlet).setCurrent(new Parabens(midlet));
 	}
 
 	/**

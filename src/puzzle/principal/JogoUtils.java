@@ -1,4 +1,4 @@
-package games.puzzle;
+package puzzle.principal;
 
 /**
  * Classe contem metodos para auxiliar o tratamento do jogo.
