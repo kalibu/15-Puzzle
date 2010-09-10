@@ -18,4 +18,5 @@ public class Mensagens {
 	
 	//Mensagens
 	public static final String PARABENS = "Parabens vc ganhou!";
+	public static final String START = "Iniciar";
 }
