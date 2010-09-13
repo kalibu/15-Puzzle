@@ -8,7 +8,9 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.MIDlet;
 
+import puzzle.menu.Menu;
 import puzzle.parabens.Parabens;
+import puzzle.util.Mensagens;
 
 /**
  * Classe principal, contem toda a regra do jogo.
@@ -66,7 +68,7 @@ public class Puzzle extends Canvas implements CommandListener {
 		movimentos = new Movimentos(this);
 
 		embaralhar = new Command(Mensagens.EMBARALHAR, Command.SCREEN, 1);
-		sair = new Command(Mensagens.SAIR, Command.EXIT, 1);
+		sair = new Command(Mensagens.SAIR, Command.SCREEN, 2);
 
 		addCommand(embaralhar);
 		addCommand(sair);
@@ -118,7 +120,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	 */
 	public void commandAction(Command c, Displayable d) {
 		if (c == this.sair) {
-			midlet.notifyDestroyed();
+			Display.getDisplay(midlet).setCurrent(new Menu(midlet));
 		} else if (c == this.embaralhar) {
 			movimentos.embaralhar();
 		}

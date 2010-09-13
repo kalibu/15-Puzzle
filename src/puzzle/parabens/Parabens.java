@@ -14,8 +14,8 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Ticker;
 import javax.microedition.midlet.MIDlet;
 
-import puzzle.principal.Mensagens;
 import puzzle.principal.Puzzle;
+import puzzle.util.Mensagens;
 
 /**
  * Responsavel pela tela de parabens.

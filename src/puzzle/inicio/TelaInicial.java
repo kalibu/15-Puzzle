@@ -11,8 +11,9 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
-import puzzle.principal.Mensagens;
-import puzzle.principal.Puzzle;
+import puzzle.menu.Menu;
+import puzzle.util.Imagens;
+import puzzle.util.Mensagens;
 
 /**
  * Cuida da tela inicial.
@@ -20,20 +21,24 @@ import puzzle.principal.Puzzle;
  * @author David Almeida Pitanguy
  * data 10/09/2010
  */
-public class Inicio extends Canvas{
+public class TelaInicial extends Canvas{
 
 	private MIDlet midlet;
 	
 	private Image fundo;
 	
+	private Imagens imagens;
+	
 	/**
 	 * @param midlet
 	 */
-	public Inicio(MIDlet midlet) {
+	public TelaInicial(MIDlet midlet) {
 		this.midlet = midlet;
 		
+		this.imagens = new Imagens();
+		
 		try {
-			fundo = Image.createImage("/fundo.png");
+			fundo = Image.createImage(imagens.getCaminhoImagem(Imagens.FUNDO));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,8 +58,22 @@ public class Inicio extends Canvas{
 	protected void keyPressed(int keyCode) {
 		
 		if((keyCode == Canvas.KEY_NUM5) || (getGameAction(keyCode) == Canvas.FIRE)){
-			Display.getDisplay(this.midlet).setCurrent(new Puzzle(this.midlet));
+			iniciarMenu();
 		}
 		
+	}
+	
+	/* (non-Javadoc)
+	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
+	 */
+	protected void pointerPressed(int x, int y) {
+		iniciarMenu();
+	}
+	
+	/**
+	 * Passa para proxima tela, que é o menu
+	 */
+	private void iniciarMenu(){
+		Display.getDisplay(this.midlet).setCurrent(new Menu(this.midlet));		
 	}
 }

@@ -1,4 +1,4 @@
-package puzzle.principal;
+package puzzle.util;
 
 /**
  * Classe responsavel por centralizar as mensagens do jogo.

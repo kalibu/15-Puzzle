@@ -5,7 +5,7 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import puzzle.inicio.Inicio;
+import puzzle.inicio.TelaInicial;
 
 /**
  * @author David Almeida Pitanguy data 06/09/2010
@@ -18,7 +18,7 @@ public class PuzzleMIDlet extends MIDlet {
 	 * Construtor responsavel por definir a tela que ira aparecer.
 	 */
 	public PuzzleMIDlet() {
-		canvas = new Inicio(this);
+		canvas = new TelaInicial(this);
 	}
 
 	/*
@@ -26,7 +26,7 @@ public class PuzzleMIDlet extends MIDlet {
 	 * 
 	 * @see javax.microedition.midlet.MIDlet#destroyApp(boolean)
 	 */
-	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {
+	protected void destroyApp(boolean flag) throws MIDletStateChangeException {
 
 	}
 
