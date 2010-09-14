@@ -11,6 +11,7 @@ package puzzle.util;
 public class Imagens {
 
 	//IMAGENS
+	public final static String CONFIGURACAO = "configuracao";
 	public final static String FUNDO = "fundo";
 	public final static String INICIAR = "iniciar";
 	public final static String NAO = "nao";

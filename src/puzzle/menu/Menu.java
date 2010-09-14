@@ -37,7 +37,7 @@ public class Menu extends Canvas {
 
 	// Guarda os menus do jogo
 	private String menu[][] = {
-			{ Imagens.INICIAR, Imagens.RANKING, Imagens.SAIR },
+			{ Imagens.INICIAR, Imagens.RANKING, Imagens.CONFIGURACAO, Imagens.SAIR },
 			{ Imagens.SIM, Imagens.NAO } };
 
 	public Menu(MIDlet midlet) {
@@ -152,6 +152,11 @@ public class Menu extends Canvas {
 			// ranking
 		case 1: {
 			Display.getDisplay(midlet).setCurrent(new Ranking(midlet));
+			break;
+		}
+		// configuracao
+		case 2: {
+			Display.getDisplay(midlet).setCurrent(new Configuracao(midlet));
 			break;
 		}
 			// sair

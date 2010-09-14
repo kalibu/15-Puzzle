@@ -17,6 +17,7 @@ import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 
 import puzzle.menu.Menu;
+import puzzle.util.DadosJogo;
 import puzzle.util.Mensagens;
 
 /**
@@ -30,20 +31,32 @@ public class Ranking extends Canvas implements CommandListener {
 
 	private final int QTD_MAX_RANKING = 100;
 
-	private final String BANCO_15 = "15_PUZZLE_BANCO";
+	private final String BANCO_3 = "3_PUZZLE_BANCO";// 2
+	private final String BANCO_8 = "8_PUZZLE_BANCO";// 3
+	private final String BANCO_15 = "15_PUZZLE_BANCO";// 4
+	private final String BANCO_24 = "24_PUZZLE_BANCO";// 5
+	private final String BANCO_35 = "35_PUZZLE_BANCO";// 6
+	private final String BANCO_48 = "48_PUZZLE_BANCO";// 7
+	private final String BANCO_63 = "63_PUZZLE_BANCO";// 8
+	private final String BANCO_80 = "80_PUZZLE_BANCO";// 9
+	private final String BANCO_99 = "99_PUZZLE_BANCO";// 10
 
 	private final int QTD_DADOS = 3;
+
+	private DadosJogo dadosJogo;
 
 	private Command voltar;
 
 	public Ranking(MIDlet midlet) {
-		setTicker(new Ticker("Ranking"));
-
 		this.voltar = new Command(Mensagens.VOLTAR, Command.SCREEN, 1);
 		this.addCommand(voltar);
 		this.setCommandListener(this);
 
 		this.midlet = midlet;
+
+		this.dadosJogo = new DadosJogo();
+		
+		setTicker(new Ticker(Mensagens.RANKING + ": " + dadosJogo.getValor()));
 	}
 
 	/**
@@ -55,11 +68,12 @@ public class Ranking extends Canvas implements CommandListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		g.setColor(0x000000);
-		int y = 30;
+		
+		int y = 40;
 		DadosRanking[] dados = carregaLista(getNomeBanco());
+		g.drawString("Nome   -   Jogadas   -   Tempo", getWidth() / 2, 20,
+				Graphics.HCENTER | Graphics.BASELINE);
 		for (int i = 0; i < dados.length; i++) {
-			g.drawString("Nome   -   Jogadas   -   Tempo", getWidth() / 2, 10,
-					Graphics.HCENTER | Graphics.BASELINE);
 			g.drawString(getRankingFormatado(dados[i]), getWidth() / 2, y,
 					Graphics.HCENTER | Graphics.BASELINE);
 			y += 10;
@@ -156,8 +170,6 @@ public class Ranking extends Canvas implements CommandListener {
 	 * 
 	 * @param record
 	 *            Record a ser inserido.
-	 * @param nomeBanco
-	 *            Nome do banco no qual sera inserido.
 	 * @return Retorna verdadeiro caso for inserido e falso caso contrario.
 	 */
 	public boolean addRecord(DadosRanking record) {
@@ -235,11 +247,41 @@ public class Ranking extends Canvas implements CommandListener {
 			Display.getDisplay(this.midlet).setCurrent(new Menu(this.midlet));
 		}
 	}
-	
+
 	/**
 	 * @return Retorna o nome correto do banco.
 	 */
-	private String getNomeBanco(){
-		return BANCO_15;
+	private String getNomeBanco() {
+		switch (dadosJogo.getValor()) {
+		case 2: {
+			return BANCO_3;
+		}
+		case 3: {
+			return BANCO_8;
+		}
+		case 4: {
+			return BANCO_15;
+		}
+		case 5: {
+			return BANCO_24;
+		}
+		case 6: {
+			return BANCO_35;
+		}
+		case 7: {
+			return BANCO_48;
+		}
+		case 8: {
+			return BANCO_63;
+		}
+		case 9: {
+			return BANCO_80;
+		}
+		case 10: {
+			return BANCO_99;
+		}
+		}
+
+		return null;
 	}
 }

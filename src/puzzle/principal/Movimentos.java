@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javax.microedition.lcdui.Canvas;
 
+import puzzle.util.DadosJogo;
+
 /**
  * Classe responsavel por cuidar de todos os movimentos.
  * 
@@ -14,12 +16,19 @@ public class Movimentos {
 	private Puzzle jogo;
 	private long movimentosJog = 0;
 
+	private DadosJogo dadosJogo;
+	
+	// Quantidade de movimentos a fazer para embaralhar
+	public final int VEZES_EMBARALHAR = 10000;
+
 	/**
 	 * @param jogo
 	 *            Recebe o jogo do qual vai tratar os movimentos.
 	 */
 	public Movimentos(Puzzle jogo) {
 		this.jogo = jogo;
+
+		this.dadosJogo = new DadosJogo();
 	}
 
 	/**
@@ -30,11 +39,10 @@ public class Movimentos {
 	 */
 	public void realizaJogada(int codeGameAction) {
 		movimentosJog++;
-		
+
 		alterarPosicaoPecas(codeGameAction);
 
-		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(),
-				Puzzle.PECAS_POR_COLUNA)) {
+		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(), dadosJogo.getValor())) {
 			jogo.ganhou();
 		}
 	}
@@ -49,7 +57,7 @@ public class Movimentos {
 		switch (codeGameAction) {
 		case (Canvas.UP):
 		case (Canvas.KEY_NUM2): {
-			if (jogo.getPosicaoDoZeroX() + 1 < Puzzle.PECAS_POR_COLUNA) {
+			if (jogo.getPosicaoDoZeroX() + 1 < dadosJogo.getValor()) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX() + 1][jogo.getPosicaoDoZeroY()];
@@ -69,7 +77,7 @@ public class Movimentos {
 		}
 		case (Canvas.LEFT):
 		case (Canvas.KEY_NUM4): {
-			if (jogo.getPosicaoDoZeroY() + 1 < Puzzle.PECAS_POR_COLUNA) {
+			if (jogo.getPosicaoDoZeroY() + 1 < dadosJogo.getValor()) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX()][jogo.getPosicaoDoZeroY() + 1];
@@ -104,17 +112,17 @@ public class Movimentos {
 		int qtdUltimo = 0;
 		Random r = new Random();
 
-		for (int i = 0; i < Puzzle.VEZES_EMBARALHAR; i++) {
+		for (int i = 0; i < VEZES_EMBARALHAR; i++) {
 
 			do {
-				atual = r.nextInt(Puzzle.PECAS_POR_COLUNA);
+				atual = r.nextInt(dadosJogo.getValor());
 
 				if (atual == ultimo) {
 					qtdUltimo++;
 				} else {
 					qtdUltimo = 0;
 				}
-			} while (qtdUltimo >= Puzzle.PECAS_POR_COLUNA);
+			} while (qtdUltimo >= dadosJogo.getValor());
 
 			colocaValoresCorretosEmbaralhar(atual);
 
@@ -161,12 +169,11 @@ public class Movimentos {
 	 */
 	public void moverPecaPorClique(int x, int y) {
 
-		if ((x < Puzzle.PECAS_POR_COLUNA - 1)
-				&& (jogo.getPecas()[y][x + 1] == 0)) {
+		if ((x < dadosJogo.getValor() - 1) && (jogo.getPecas()[y][x + 1] == 0)) {
 			realizaJogada(Canvas.RIGHT);
 		} else if ((x > 0) && (jogo.getPecas()[y][x - 1] == 0)) {
 			realizaJogada(Canvas.LEFT);
-		} else if ((y < Puzzle.PECAS_POR_COLUNA - 1)
+		} else if ((y < dadosJogo.getValor() - 1)
 				&& (jogo.getPecas()[y + 1][x] == 0)) {
 			realizaJogada(Canvas.DOWN);
 		} else if ((y > 0) && (jogo.getPecas()[y - 1][x] == 0)) {

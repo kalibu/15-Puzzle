@@ -12,6 +12,7 @@ import javax.microedition.midlet.MIDlet;
 
 import puzzle.menu.Menu;
 import puzzle.parabens.Parabens;
+import puzzle.util.DadosJogo;
 import puzzle.util.Mensagens;
 
 /**
@@ -21,16 +22,9 @@ import puzzle.util.Mensagens;
  */
 public class Puzzle extends Canvas implements CommandListener {
 
-
-	// Quantidade de pedras por coluna
-	public static final int PECAS_POR_COLUNA = 4;
-	
-	// Quantidade de movimentos a fazer para embaralhar
-	public static final int VEZES_EMBARALHAR = PECAS_POR_COLUNA * 1;
-	
-	//Altura e largura das pecas
-	public final int alturaPeca = getHeight() / PECAS_POR_COLUNA;
-	public final int larguraPeca = getWidth() / PECAS_POR_COLUNA;
+	// Altura e largura das pecas
+	public final int alturaPeca;
+	public final int larguraPeca;
 
 	// Cores utilizadas
 	private int corFundo = 0xFFFFFF;
@@ -41,6 +35,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	// Classe auxiliares
 	private JogoUtils jogoUtils;
 	private Movimentos movimentos;
+	private DadosJogo dadosJogo;
 
 	// Botões
 	private Command embaralhar;
@@ -48,14 +43,13 @@ public class Puzzle extends Canvas implements CommandListener {
 
 	private int[][] pecas;
 
-	private int posicaoDoZeroX = PECAS_POR_COLUNA - 1;
-	private int posicaoDoZeroY = PECAS_POR_COLUNA - 1;
+	private int posicaoDoZeroX;
+	private int posicaoDoZeroY;
 
 	private int ppX;
 	private int ppY;
-	private int margem = getWidth() < getHeight() ? getWidth()
-			/ PECAS_POR_COLUNA : getHeight() / PECAS_POR_COLUNA;
-	
+	private int margem;
+
 	private long tempoJog = 0;
 
 	/**
@@ -65,6 +59,8 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * @param midlet
 	 */
 	public Puzzle(MIDlet midlet) {
+		dadosJogo = new DadosJogo();
+
 		setTitle(Mensagens.TITULO);
 		this.midlet = midlet;
 
@@ -78,10 +74,19 @@ public class Puzzle extends Canvas implements CommandListener {
 		addCommand(sair);
 		setCommandListener(this);
 
-		pecas = jogoUtils.carregarPecas(PECAS_POR_COLUNA);
+		posicaoDoZeroX = dadosJogo.getValor() - 1;
+		posicaoDoZeroY = dadosJogo.getValor() - 1;
+
+		margem = getWidth() < getHeight() ? getWidth() / dadosJogo.getValor()
+				: getHeight() / dadosJogo.getValor();
+
+		alturaPeca = getHeight() / dadosJogo.getValor();
+		larguraPeca = getWidth() / dadosJogo.getValor();
+
+		pecas = jogoUtils.carregarPecas(dadosJogo.getValor());
 
 		movimentos.embaralhar();
-		
+
 		this.tempoJog = Calendar.getInstance().getTime().getTime();
 	}
 
@@ -192,9 +197,11 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * Animação para o ganhador
 	 */
 	public void ganhou() {
-		this.tempoJog = Calendar.getInstance().getTime().getTime() - this.tempoJog;
-		
-		Display.getDisplay(this.midlet).setCurrent(new Parabens(midlet, tempoJog, movimentos.getMovimentosJog()));
+		this.tempoJog = Calendar.getInstance().getTime().getTime()
+				- this.tempoJog;
+
+		Display.getDisplay(this.midlet).setCurrent(
+				new Parabens(midlet, tempoJog, movimentos.getMovimentosJog()));
 	}
 
 	/**
