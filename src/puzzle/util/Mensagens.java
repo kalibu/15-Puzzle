@@ -11,6 +11,7 @@ public class Mensagens {
 
 	// Titulos
 	public static final String CONFIGURACAO = "Configuração";
+	public static final String FOTO = "Foto";
 	public static final String MSG_ADD_RANKING = "Digite seu nome";
 	public static final String RANKING = "Ranking";
 	public static final String TITULO = "15-Puzzle";

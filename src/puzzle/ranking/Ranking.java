@@ -17,6 +17,7 @@ import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 
 import puzzle.menu.Menu;
+import puzzle.util.BancoUtil;
 import puzzle.util.DadosJogo;
 import puzzle.util.Mensagens;
 
@@ -81,23 +82,6 @@ public class Ranking extends Canvas implements CommandListener {
 	}
 
 	/**
-	 * @param nome
-	 *            Nome do banco a verificar.
-	 * @return Retorna se o banco existe ou não.
-	 */
-	private boolean existeRS(String nome) {
-		String[] bancos = RecordStore.listRecordStores();
-		if (bancos != null) {
-			for (int i = 0; i < bancos.length; i++) {
-				if (bancos[i].equals(nome)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Salva os dados no banco. Obs: A ordem dos dados importa.
 	 * 
 	 * @param lista
@@ -107,7 +91,7 @@ public class Ranking extends Canvas implements CommandListener {
 	 */
 	private void salvar(DadosRanking[] lista, String banco) {
 		try {
-			if (existeRS(banco)) {
+			if (BancoUtil.existeRS(banco)) {
 				RecordStore.deleteRecordStore(banco);
 			}
 			RecordStore rs = RecordStore.openRecordStore(banco, true);

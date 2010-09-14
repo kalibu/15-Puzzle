@@ -20,21 +20,6 @@ public class DadosJogo {
 	private int valor = 0;
 
 	/**
-	 * @return Retorna se o banco existe ou não.
-	 */
-	private boolean existeRS() {
-		String[] bancos = RecordStore.listRecordStores();
-		if (bancos != null) {
-			for (int i = 0; i < bancos.length; i++) {
-				if (bancos[i].equals(BANCO)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Salva o dado no banco.
 	 * 
 	 * @param valor
@@ -44,7 +29,7 @@ public class DadosJogo {
 		this.valor = valor;
 
 		try {
-			if (existeRS()) {
+			if (BancoUtil.existeRS(BANCO)) {
 				RecordStore.deleteRecordStore(BANCO);
 			}
 			RecordStore rs = RecordStore.openRecordStore(BANCO, true);

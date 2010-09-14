@@ -11,6 +11,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
+import puzzle.foto.TirarFoto;
 import puzzle.principal.Puzzle;
 import puzzle.ranking.Ranking;
 import puzzle.util.Imagens;
@@ -37,7 +38,7 @@ public class Menu extends Canvas {
 
 	// Guarda os menus do jogo
 	private String menu[][] = {
-			{ Imagens.INICIAR, Imagens.RANKING, Imagens.CONFIGURACAO, Imagens.SAIR },
+			{ Imagens.INICIAR, Imagens.RANKING, Imagens.CONFIGURACAO, Imagens.TIRAR_FOTO, Imagens.SAIR },
 			{ Imagens.SIM, Imagens.NAO } };
 
 	public Menu(MIDlet midlet) {
@@ -157,6 +158,11 @@ public class Menu extends Canvas {
 		// configuracao
 		case 2: {
 			Display.getDisplay(midlet).setCurrent(new Configuracao(midlet));
+			break;
+		}
+		// tirar foto
+		case 3: {
+			Display.getDisplay(midlet).setCurrent(new TirarFoto(midlet));
 			break;
 		}
 			// sair

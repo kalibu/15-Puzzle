@@ -18,6 +18,7 @@ public class Imagens {
 	public final static String RANKING = "ranking";
 	public final static String SAIR = "sair";
 	public final static String SIM = "sim";
+	public final static String TIRAR_FOTO = "tirarFoto";
 
 	public final static String SELECIONADO = "_selecionado";
 	
