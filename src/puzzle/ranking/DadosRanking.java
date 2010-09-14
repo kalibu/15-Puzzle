@@ -3,6 +3,7 @@
  */
 package puzzle.ranking;
 
+
 /**
  * @author David Almeida Pitanguy
  * data 13/09/2010
@@ -39,5 +40,15 @@ public class DadosRanking {
 	 */
 	public long getMovimentos() {
 		return movimentos;
+	}
+	
+	public String getTempoFormatado(){
+		long totalSegundos = getTempo() / 1000;
+		long segundos = totalSegundos % 60;
+		long minutos = totalSegundos / 60;
+		long horas = minutos / 60;
+		minutos = minutos % 60;
+		
+		return horas + "h" + minutos + "m" + segundos + "s";
 	}
 }

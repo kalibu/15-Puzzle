@@ -14,6 +14,7 @@ public class Imagens {
 	public final static String FUNDO = "fundo";
 	public final static String INICIAR = "iniciar";
 	public final static String NAO = "nao";
+	public final static String RANKING = "ranking";
 	public final static String SAIR = "sair";
 	public final static String SIM = "sim";
 

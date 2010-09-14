@@ -12,6 +12,7 @@ import javax.microedition.lcdui.Canvas;
 public class Movimentos {
 
 	private Puzzle jogo;
+	private long movimentosJog = 0;
 
 	/**
 	 * @param jogo
@@ -28,6 +29,8 @@ public class Movimentos {
 	 *            Codigo da ação a ser realizada.
 	 */
 	public void realizaJogada(int codeGameAction) {
+		movimentosJog++;
+		
 		alterarPosicaoPecas(codeGameAction);
 
 		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(),
@@ -170,6 +173,13 @@ public class Movimentos {
 			realizaJogada(Canvas.UP);
 		}
 
+	}
+
+	/**
+	 * @return the movimentosJog
+	 */
+	public long getMovimentosJog() {
+		return movimentosJog;
 	}
 
 }

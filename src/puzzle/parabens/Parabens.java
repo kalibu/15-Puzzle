@@ -6,15 +6,13 @@ package puzzle.parabens;
 import java.util.Random;
 
 import javax.microedition.lcdui.Canvas;
-import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Ticker;
 import javax.microedition.midlet.MIDlet;
 
-import puzzle.principal.Puzzle;
+import puzzle.ranking.AdicionarRanking;
+import puzzle.ranking.Ranking;
 import puzzle.util.Mensagens;
 
 /**
@@ -22,7 +20,7 @@ import puzzle.util.Mensagens;
  * 
  * @author David Almeida Pitanguy data 10/09/2010
  */
-public class Parabens extends Canvas implements CommandListener {
+public class Parabens extends Canvas {
 
 	private MIDlet midlet;
 
@@ -36,25 +34,32 @@ public class Parabens extends Canvas implements CommandListener {
 
 	private int corFundo = 0x000000;
 
-	private Command voltar;
-
 	private boolean animar = true;
+	
+	private Ranking ranking;
+	
+	private long tempoJog;
+	private long movimentosJog;
 
-	public Parabens(MIDlet midlet) {
+	public Parabens(MIDlet midlet, long tempo, long movimentos) {
+
 		this.midlet = midlet;
 
-		voltar = new Command(Mensagens.VOLTAR, Command.SCREEN, 1);
-
 		this.setTicker(new Ticker(Mensagens.PARABENS));
-
-		this.addCommand(voltar);
-		this.setCommandListener(this);
+		
+		this.ranking = new Ranking(midlet);
+		
+		this.tempoJog = tempo;
+		this.movimentosJog = movimentos;
 
 		inicializarPontos();
 
 		animar();
 	}
 
+	/**
+	 *  Inicializa todos os pontos.
+	 */
 	private void inicializarPontos() {
 		new Thread(new Runnable() {
 
@@ -101,16 +106,12 @@ public class Parabens extends Canvas implements CommandListener {
 		}
 	}
 
-	public void commandAction(Command c, Displayable d) {
-		if (c == this.voltar) {
-			animar = false;
-			Display.getDisplay(this.midlet).setCurrent(new Puzzle(this.midlet));
-		}
-	}
-
+	/**
+	 * Cuida da animação da tela de parabens.
+	 */
 	private void animar() {
 		new Thread(new Runnable() {
-
+			
 			public void run() {
 				while (animar) {
 					repaint();
@@ -122,5 +123,37 @@ public class Parabens extends Canvas implements CommandListener {
 			}
 		}).start();
 	}
+
+	/* (non-Javadoc)
+	 * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+	 */
+	protected void keyPressed(int keyCode) {
+		
+		if((keyCode == Canvas.KEY_NUM5) || (getGameAction(keyCode) == Canvas.FIRE)){
+			iniciarMenu();
+		}
+		
+	}
+	
+	/* (non-Javadoc)
+	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
+	 */
+	protected void pointerPressed(int x, int y) {
+		iniciarMenu();
+	}
+	
+	/**
+	 * Passa para proxima tela, que é o menu
+	 */
+	private void iniciarMenu(){
+		animar = false;
+		
+		if(ranking.isPodeAdicionar(this.movimentosJog)){
+			Display.getDisplay(this.midlet).setCurrent(new AdicionarRanking(this.midlet, this.tempoJog, this.movimentosJog));
+		}else{			
+			Display.getDisplay(this.midlet).setCurrent(new Ranking(this.midlet));	
+		}
+	}
+
 
 }

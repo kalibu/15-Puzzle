@@ -1,5 +1,7 @@
 package puzzle.principal;
 
+import java.util.Calendar;
+
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -24,7 +26,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	public static final int PECAS_POR_COLUNA = 4;
 	
 	// Quantidade de movimentos a fazer para embaralhar
-	public static final int VEZES_EMBARALHAR = PECAS_POR_COLUNA * 1000;
+	public static final int VEZES_EMBARALHAR = PECAS_POR_COLUNA * 1;
 	
 	//Altura e largura das pecas
 	public final int alturaPeca = getHeight() / PECAS_POR_COLUNA;
@@ -53,6 +55,8 @@ public class Puzzle extends Canvas implements CommandListener {
 	private int ppY;
 	private int margem = getWidth() < getHeight() ? getWidth()
 			/ PECAS_POR_COLUNA : getHeight() / PECAS_POR_COLUNA;
+	
+	private long tempoJog = 0;
 
 	/**
 	 * Construtor responsavel por fazer todo o necessario para inicializar o
@@ -77,6 +81,8 @@ public class Puzzle extends Canvas implements CommandListener {
 		pecas = jogoUtils.carregarPecas(PECAS_POR_COLUNA);
 
 		movimentos.embaralhar();
+		
+		this.tempoJog = Calendar.getInstance().getTime().getTime();
 	}
 
 	/*
@@ -186,7 +192,9 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * Animação para o ganhador
 	 */
 	public void ganhou() {
-		Display.getDisplay(this.midlet).setCurrent(new Parabens(midlet));
+		this.tempoJog = Calendar.getInstance().getTime().getTime() - this.tempoJog;
+		
+		Display.getDisplay(this.midlet).setCurrent(new Parabens(midlet, tempoJog, movimentos.getMovimentosJog()));
 	}
 
 	/**

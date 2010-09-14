@@ -12,6 +12,7 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
 import puzzle.principal.Puzzle;
+import puzzle.ranking.Ranking;
 import puzzle.util.Imagens;
 
 /**
@@ -35,7 +36,8 @@ public class Menu extends Canvas {
 	private int margemItem = alturaItem / 2;
 
 	// Guarda os menus do jogo
-	private String menu[][] = { { Imagens.INICIAR, Imagens.SAIR },
+	private String menu[][] = {
+			{ Imagens.INICIAR, Imagens.RANKING, Imagens.SAIR },
 			{ Imagens.SIM, Imagens.NAO } };
 
 	public Menu(MIDlet midlet) {
@@ -115,30 +117,69 @@ public class Menu extends Canvas {
 		if ((keyCode == Canvas.KEY_NUM5)
 				|| (getGameAction(keyCode) == Canvas.FIRE)) {
 
-			// menu principal
-			if (menuSelecionado == MENU_PRINCIPAL) {
-				// iniciar
-				if (itemSelecionado == 0) {
-					Display.getDisplay(midlet).setCurrent(new Puzzle(midlet));
-				} else
-				// sair
-				if (itemSelecionado == 1) {
-					menuSelecionado = MENU_CONFIRMACAO;
-				}
-			} else
-			// menu confirmação
-			if (menuSelecionado == MENU_CONFIRMACAO) {
-				if (itemSelecionado == 0) {
-					midlet.notifyDestroyed();
-				} else {
-					menuSelecionado = MENU_PRINCIPAL;
-					itemSelecionado = 0;
-				}
-			}
+			menus();
 
 		}
 
 		repaint();
+	}
+
+	/**
+	 * Define qual menu deve ser mostrado.
+	 */
+	private void menus() {
+		// menu principal
+		if (menuSelecionado == MENU_PRINCIPAL) {
+			menuPrincipal();
+
+		} else
+		// menu confirmação
+		if (menuSelecionado == MENU_CONFIRMACAO) {
+			menuConfirmacao();
+		}
+	}
+
+	/**
+	 * Cuida do menu principal.
+	 */
+	private void menuPrincipal() {
+		switch (itemSelecionado) {
+		// iniciar
+		case 0: {
+			Display.getDisplay(midlet).setCurrent(new Puzzle(midlet));
+			break;
+		}
+			// ranking
+		case 1: {
+			Display.getDisplay(midlet).setCurrent(new Ranking(midlet));
+			break;
+		}
+			// sair
+		default: {
+			menuSelecionado = MENU_CONFIRMACAO;
+			itemSelecionado = 1;
+			break;
+		}
+		}
+	}
+
+	/**
+	 * Cuida do menu de confirmação.
+	 */
+	private void menuConfirmacao() {
+		switch (itemSelecionado) {
+		// sim
+		case 0: {
+			midlet.notifyDestroyed();
+			break;
+		}
+			// nao
+		default: {
+			menuSelecionado = MENU_PRINCIPAL;
+			itemSelecionado = 0;
+			break;
+		}
+		}
 	}
 
 }
