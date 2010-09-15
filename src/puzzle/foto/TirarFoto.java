@@ -104,11 +104,12 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 		} else if (d == mostraFoto) {
 			if (c == this.salvarFoto) {
 				salvarImagem();
+				new Fotos(midlet);
+			}else{				
+				mostraFoto.deleteAll();
+				Display.getDisplay(midlet).setCurrent(this);
 			}
 
-			mostraFoto.deleteAll();
-
-			Display.getDisplay(midlet).setCurrent(this);
 		}
 
 	}

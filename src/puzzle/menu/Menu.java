@@ -11,6 +11,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
+import puzzle.foto.Fotos;
 import puzzle.foto.TirarFoto;
 import puzzle.principal.Puzzle;
 import puzzle.ranking.Ranking;
@@ -162,7 +163,7 @@ public class Menu extends Canvas {
 		}
 		// tirar foto
 		case 3: {
-			Display.getDisplay(midlet).setCurrent(new TirarFoto(midlet));
+			new Fotos(midlet);
 			break;
 		}
 			// sair
