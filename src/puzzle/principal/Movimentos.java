@@ -42,7 +42,7 @@ public class Movimentos {
 
 		alterarPosicaoPecas(codeGameAction);
 
-		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(), dadosJogo.getValor())) {
+		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(), dadosJogo.getQtdPcsJogo())) {
 			jogo.ganhou();
 		}
 	}
@@ -57,7 +57,7 @@ public class Movimentos {
 		switch (codeGameAction) {
 		case (Canvas.UP):
 		case (Canvas.KEY_NUM2): {
-			if (jogo.getPosicaoDoZeroX() + 1 < dadosJogo.getValor()) {
+			if (jogo.getPosicaoDoZeroX() + 1 < dadosJogo.getQtdPcsJogo()) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX() + 1][jogo.getPosicaoDoZeroY()];
@@ -77,7 +77,7 @@ public class Movimentos {
 		}
 		case (Canvas.LEFT):
 		case (Canvas.KEY_NUM4): {
-			if (jogo.getPosicaoDoZeroY() + 1 < dadosJogo.getValor()) {
+			if (jogo.getPosicaoDoZeroY() + 1 < dadosJogo.getQtdPcsJogo()) {
 				jogo.getPecas()[jogo.getPosicaoDoZeroX()][jogo
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX()][jogo.getPosicaoDoZeroY() + 1];
@@ -115,14 +115,14 @@ public class Movimentos {
 		for (int i = 0; i < VEZES_EMBARALHAR; i++) {
 
 			do {
-				atual = r.nextInt(dadosJogo.getValor());
+				atual = r.nextInt(dadosJogo.getQtdPcsJogo());
 
 				if (atual == ultimo) {
 					qtdUltimo++;
 				} else {
 					qtdUltimo = 0;
 				}
-			} while (qtdUltimo >= dadosJogo.getValor());
+			} while (qtdUltimo >= dadosJogo.getQtdPcsJogo());
 
 			colocaValoresCorretosEmbaralhar(atual);
 
@@ -169,11 +169,11 @@ public class Movimentos {
 	 */
 	public void moverPecaPorClique(int x, int y) {
 
-		if ((x < dadosJogo.getValor() - 1) && (jogo.getPecas()[y][x + 1] == 0)) {
+		if ((x < dadosJogo.getQtdPcsJogo() - 1) && (jogo.getPecas()[y][x + 1] == 0)) {
 			realizaJogada(Canvas.RIGHT);
 		} else if ((x > 0) && (jogo.getPecas()[y][x - 1] == 0)) {
 			realizaJogada(Canvas.LEFT);
-		} else if ((y < dadosJogo.getValor() - 1)
+		} else if ((y < dadosJogo.getQtdPcsJogo() - 1)
 				&& (jogo.getPecas()[y + 1][x] == 0)) {
 			realizaJogada(Canvas.DOWN);
 		} else if ((y > 0) && (jogo.getPecas()[y - 1][x] == 0)) {

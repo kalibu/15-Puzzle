@@ -41,7 +41,7 @@ public class Configuracao extends Form implements CommandListener {
 		this.setCommandListener(this);
 
 		this.pecas = new Gauge(Mensagens.QTD_PCS, true, 10,
-				dadosJogo.getValor());
+				dadosJogo.getQtdPcsJogo());
 
 		this.append(this.pecas);
 
@@ -60,7 +60,7 @@ public class Configuracao extends Form implements CommandListener {
 	public void commandAction(Command c, Displayable d) {
 		if (c == ok) {
 			if (pecas.getValue() >= QTD_MIN) {
-				dadosJogo.salvar(pecas.getValue());
+				dadosJogo.salvarQtdPecasJogo(pecas.getValue());
 				Display.getDisplay(midlet).setCurrent(new Menu(midlet));
 			}
 		}

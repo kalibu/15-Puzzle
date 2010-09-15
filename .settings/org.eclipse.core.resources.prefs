@@ -1,4 +1,4 @@
-#Tue Sep 14 16:55:22 AMT 2010
+#Wed Sep 15 13:54:48 AMT 2010
 eclipse.preferences.version=1
 encoding//.processed/src/puzzle/foto/ManterFoto.java=UTF-8
 encoding//.processed/src/puzzle/foto/TirarFoto.java=UTF-8
@@ -16,5 +16,6 @@ encoding//.processed/src/puzzle/ranking/DadosRanking.java=UTF-8
 encoding//.processed/src/puzzle/ranking/Ranking.java=UTF-8
 encoding//.processed/src/puzzle/util/BancoUtil.java=UTF-8
 encoding//.processed/src/puzzle/util/DadosJogo.java=UTF-8
+encoding//.processed/src/puzzle/util/ImagemUtil.java=UTF-8
 encoding//.processed/src/puzzle/util/Imagens.java=UTF-8
 encoding//.processed/src/puzzle/util/Mensagens.java=UTF-8

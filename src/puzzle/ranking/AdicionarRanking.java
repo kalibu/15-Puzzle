@@ -65,6 +65,12 @@ public class AdicionarRanking extends Form implements CommandListener {
 	public void commandAction(Command c, Displayable d) {
 
 		if (c == this.salvar) {
+
+			//adiciona nome padrao caso ñ for selecionado um nome
+			if(tf.getString().length() == 0){
+				tf.setString(Mensagens.NOME_PADRAO);
+			}
+			
 			ranking.addRecord(new DadosRanking(tf.getString(), this.tempoJog, this.movimentosJog));
 		}
 

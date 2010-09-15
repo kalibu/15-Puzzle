@@ -16,6 +16,7 @@ import javax.microedition.media.control.VideoControl;
 import javax.microedition.midlet.MIDlet;
 
 import puzzle.menu.Menu;
+import puzzle.util.ImagemUtil;
 import puzzle.util.Mensagens;
 
 /**
@@ -37,13 +38,13 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 	private MIDlet midlet;
 
 	private byte[] foto;
-	
+
 	private ManterFoto manterFoto;
 
 	public TirarFoto(MIDlet midlet) {
 
 		this.midlet = midlet;
-		
+
 		this.manterFoto = new ManterFoto();
 
 		mostraFoto = new Form(Mensagens.FOTO);
@@ -82,8 +83,12 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 		setCommandListener(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.microedition.lcdui.CommandListener#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.CommandListener#commandAction(javax.microedition
+	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command c, Displayable d) {
 
@@ -97,7 +102,7 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 			}
 
 		} else if (d == mostraFoto) {
-			if (c == this.capturaFoto) {
+			if (c == this.salvarFoto) {
 				salvarImagem();
 			}
 
@@ -108,7 +113,9 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
@@ -118,6 +125,10 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 			foto = this.videoControl.getSnapshot(null);
 
 			Image image = Image.createImage(foto, 0, foto.length);
+
+			// redimencionando imagem para mostrar na tela
+			image = new ImagemUtil().redimencionarImagem(image, getWidth(),
+					getHeight());
 
 			mostraFoto.append(new ImageItem("Imagem Capturada", image,
 					ImageItem.LAYOUT_CENTER, "Foto"));
@@ -130,8 +141,11 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.microedition.lcdui.Canvas#paint(javax.microedition.lcdui.Graphics)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.Canvas#paint(javax.microedition.lcdui.Graphics)
 	 */
 	protected void paint(Graphics g) {
 

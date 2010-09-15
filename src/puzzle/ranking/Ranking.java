@@ -56,8 +56,9 @@ public class Ranking extends Canvas implements CommandListener {
 		this.midlet = midlet;
 
 		this.dadosJogo = new DadosJogo();
-		
-		setTicker(new Ticker(Mensagens.RANKING + ": " + dadosJogo.getValor()));
+
+		setTicker(new Ticker(Mensagens.RANKING + ": "
+				+ dadosJogo.getQtdPcsJogo() + " peças"));
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class Ranking extends Canvas implements CommandListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		g.setColor(0x000000);
-		
+
 		int y = 40;
 		DadosRanking[] dados = carregaLista(getNomeBanco());
 		g.drawString("Nome   -   Jogadas   -   Tempo", getWidth() / 2, 20,
@@ -236,7 +237,7 @@ public class Ranking extends Canvas implements CommandListener {
 	 * @return Retorna o nome correto do banco.
 	 */
 	private String getNomeBanco() {
-		switch (dadosJogo.getValor()) {
+		switch (dadosJogo.getQtdPcsJogo()) {
 		case 2: {
 			return BANCO_3;
 		}

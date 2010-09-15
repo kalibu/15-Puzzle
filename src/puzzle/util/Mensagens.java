@@ -17,7 +17,11 @@ public class Mensagens {
 	public static final String TITULO = "15-Puzzle";
 
 	// Botões
+	public static final String DESENHA_LINHA = "Mostrar linhas";
+	public static final String DESENHA_NUMERO = "Mostrar numeros";
 	public static final String EMBARALHAR = "Embaralhar";
+	public static final String NAO_DESENHA_LINHA = "Não mostrar linhas";
+	public static final String NAO_DESENHA_NUMERO = "Não mostrar numeros";
 	public static final String NAO_SALVAR = "Não Salvar";
 	public static final String OK = "OK";
 	public static final String SAIR = "Sair";
@@ -26,6 +30,7 @@ public class Mensagens {
 
 	// Mensagens
 	public static final String NOME = "Nome";
+	public static final String NOME_PADRAO = "15-Puzzle";
 	public static final String PARABENS = "Parabens vc ganhou!";
 	public static final String START = "Iniciar";
 	public static final String QTD_PCS = "Quantidade de peças linha/coluna:";

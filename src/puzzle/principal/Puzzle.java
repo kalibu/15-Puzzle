@@ -1,5 +1,6 @@
 package puzzle.principal;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 import javax.microedition.lcdui.Canvas;
@@ -8,11 +9,16 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.game.TiledLayer;
 import javax.microedition.midlet.MIDlet;
 
+import puzzle.foto.ManterFoto;
 import puzzle.menu.Menu;
 import puzzle.parabens.Parabens;
 import puzzle.util.DadosJogo;
+import puzzle.util.ImagemUtil;
+import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
 
 /**
@@ -22,13 +28,18 @@ import puzzle.util.Mensagens;
  */
 public class Puzzle extends Canvas implements CommandListener {
 
+	// itens a desenhar
+	private final int DESENHO = 0;
+	private final int LINHAS = 1;
+	private final int NUMEROS = 2;
+
 	// Altura e largura das pecas
 	public final int alturaPeca;
 	public final int larguraPeca;
 
 	// Cores utilizadas
 	private int corFundo = 0xFFFFFF;
-	private int corLinha = 0x000000;
+	private int corLinha = 0xFF0000;
 
 	private MIDlet midlet;
 
@@ -36,10 +47,15 @@ public class Puzzle extends Canvas implements CommandListener {
 	private JogoUtils jogoUtils;
 	private Movimentos movimentos;
 	private DadosJogo dadosJogo;
+	private Imagens imagens;
 
 	// Botões
+	private Command desenhaLinha;
+	private Command desenhaNumero;
 	private Command embaralhar;
 	private Command sair;
+
+	private TiledLayer desenho;
 
 	private int[][] pecas;
 
@@ -51,6 +67,9 @@ public class Puzzle extends Canvas implements CommandListener {
 	private int margem;
 
 	private long tempoJog = 0;
+
+	private boolean desenharLinha = true;
+	private boolean desenharNumero = true;
 
 	/**
 	 * Construtor responsavel por fazer todo o necessario para inicializar o
@@ -67,27 +86,61 @@ public class Puzzle extends Canvas implements CommandListener {
 		jogoUtils = new JogoUtils();
 		movimentos = new Movimentos(this);
 
-		embaralhar = new Command(Mensagens.EMBARALHAR, Command.SCREEN, 1);
-		sair = new Command(Mensagens.SAIR, Command.SCREEN, 2);
+		carregarOpcoesJogo();
+		embaralhar = new Command(Mensagens.EMBARALHAR, Command.SCREEN, 3);
+		sair = new Command(Mensagens.SAIR, Command.SCREEN, 4);
 
 		addCommand(embaralhar);
 		addCommand(sair);
 		setCommandListener(this);
 
-		posicaoDoZeroX = dadosJogo.getValor() - 1;
-		posicaoDoZeroY = dadosJogo.getValor() - 1;
+		posicaoDoZeroX = dadosJogo.getQtdPcsJogo() - 1;
+		posicaoDoZeroY = dadosJogo.getQtdPcsJogo() - 1;
 
-		margem = getWidth() < getHeight() ? getWidth() / dadosJogo.getValor()
-				: getHeight() / dadosJogo.getValor();
+		margem = getWidth() < getHeight() ? getWidth()
+				/ dadosJogo.getQtdPcsJogo() : getHeight()
+				/ dadosJogo.getQtdPcsJogo();
 
-		alturaPeca = getHeight() / dadosJogo.getValor();
-		larguraPeca = getWidth() / dadosJogo.getValor();
+		alturaPeca = getHeight() / dadosJogo.getQtdPcsJogo();
+		larguraPeca = getWidth() / dadosJogo.getQtdPcsJogo();
 
-		pecas = jogoUtils.carregarPecas(dadosJogo.getValor());
+		pecas = jogoUtils.carregarPecas(dadosJogo.getQtdPcsJogo());
 
 		movimentos.embaralhar();
 
+		imagens = new Imagens();
+
+		carregarDesenho();
+
 		this.tempoJog = Calendar.getInstance().getTime().getTime();
+
+	}
+
+	/**
+	 * Carrega o desenho a ser mostrado
+	 */
+	private void carregarDesenho() {
+
+		Image imagem = null;
+
+		// se imagem selecionada for zero, carrega imagem padrao
+		if (dadosJogo.getNumImagemSelecionada() == 0) {
+			try {
+				imagem = Image.createImage(imagens
+						.getCaminhoImagem(Imagens.IMAGEM_PADRAO));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			imagem = new ManterFoto().carregarFoto(dadosJogo
+					.getNumImagemSelecionada());
+		}
+
+		imagem = new ImagemUtil().redimencionarImagem(imagem, larguraPeca
+				* dadosJogo.getQtdPcsJogo(),
+				alturaPeca * dadosJogo.getQtdPcsJogo());
+		desenho = new TiledLayer(dadosJogo.getQtdPcsJogo(),
+				dadosJogo.getQtdPcsJogo(), imagem, larguraPeca, alturaPeca);
 	}
 
 	/*
@@ -103,23 +156,59 @@ public class Puzzle extends Canvas implements CommandListener {
 
 		g.setColor(corLinha);
 
+		desenhar(g, DESENHO);
+		desenho.paint(g);
+
+		// desenha as linhas
+		if (desenharLinha) {
+			desenhar(g, LINHAS);
+		}
+
+		// desenhas os numeros
+		if (desenharNumero) {
+			desenhar(g, NUMEROS);
+		}
+
+	}
+
+	/**
+	 * Pinta as fotos e linhas.
+	 * 
+	 * @param g
+	 *            Graphics aonde sera desenhado
+	 */
+	private void desenhar(Graphics g, int itemDesenhar) {
 		int pecaY = 0;
 		for (int j = 0; j < getWidth() - larguraPeca / 2; j += larguraPeca) {
 
 			int pecaX = 0;
 			for (int i = 0; i < getHeight() - alturaPeca / 2; i += alturaPeca) {
 
-				g.drawRect(j, i, larguraPeca, alturaPeca);
-				if (pecas[pecaX][pecaY] != 0) {
-					g.drawString(Integer.toString(pecas[pecaX][pecaY]), j
-							+ alturaPeca / 2 - g.getFont().getHeight() / 2, i
-							+ larguraPeca / 2, Graphics.TOP | Graphics.HCENTER);
+				switch (itemDesenhar) {
+				// desenhar imagem
+				case DESENHO: {
+					desenho.setCell(pecaY, pecaX, pecas[pecaX][pecaY]);
+					break;
 				}
+					// desenha as linhas
+				case LINHAS: {
+					g.drawRect(j, i, larguraPeca, alturaPeca);
+					break;
+				}
+					// desenhas os numeros
+				case NUMEROS: {
+					if (pecas[pecaX][pecaY] != 0) {
+						g.drawString(Integer.toString(pecas[pecaX][pecaY]),
+								j + 3, i, Graphics.LEFT | Graphics.TOP);
+					}
+					break;
+				}
+				}
+
 				pecaX++;
 			}
 			pecaY++;
 		}
-
 	}
 
 	/*
@@ -134,6 +223,16 @@ public class Puzzle extends Canvas implements CommandListener {
 			Display.getDisplay(midlet).setCurrent(new Menu(midlet));
 		} else if (c == this.embaralhar) {
 			movimentos.embaralhar();
+		} else if (c == this.desenhaLinha) {
+			desenharLinha = !desenharLinha;
+			this.removeCommand(desenhaLinha);
+			carregaOpcaoDesenharLinhas();
+			repaint();
+		} else if (c == this.desenhaNumero) {
+			desenharNumero = !desenharNumero;
+			this.removeCommand(desenhaNumero);
+			carregaOpcaoDesenharNumeros();
+			repaint();
 		}
 	}
 
@@ -202,6 +301,33 @@ public class Puzzle extends Canvas implements CommandListener {
 
 		Display.getDisplay(this.midlet).setCurrent(
 				new Parabens(midlet, tempoJog, movimentos.getMovimentosJog()));
+	}
+
+	/**
+	 * Carrega as opcoes do jogo de acordo com a escolha do jogador
+	 */
+	private void carregarOpcoesJogo() {
+		carregaOpcaoDesenharLinhas();
+		carregaOpcaoDesenharNumeros();
+	}
+
+	/**
+	 * Carrega a opcao de desenhar numeros.
+	 */
+	private void carregaOpcaoDesenharNumeros() {
+		desenhaNumero = new Command(
+				desenharNumero ? Mensagens.NAO_DESENHA_NUMERO
+						: Mensagens.DESENHA_NUMERO, Command.SCREEN, 1);
+		addCommand(desenhaNumero);
+	}
+
+	/**
+	 * Carrega a opcao de desenhar linhas.
+	 */
+	private void carregaOpcaoDesenharLinhas() {
+		desenhaLinha = new Command(desenharLinha ? Mensagens.NAO_DESENHA_LINHA
+				: Mensagens.DESENHA_LINHA, Command.SCREEN, 2);
+		addCommand(desenhaLinha);
 	}
 
 	/**
