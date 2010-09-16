@@ -11,6 +11,7 @@ public class Mensagens {
 
 	// Titulos
 	public static final String CONFIGURACAO = "Configuração";
+	public static final String ERRO = "Erro";
 	public static final String FOTO = "Foto";
 	public static final String FOTO_PADRAO = "Foto padrão";
 	public static final String FOTOS = "Fotos";
@@ -21,9 +22,11 @@ public class Mensagens {
 	// Botões
 	public static final String DEFINIR = "Definir como padrão";
 	public static final String DELETAR = "Deletar";
+	public static final String DESENHA_FOTO = "Mostrar foto";
 	public static final String DESENHA_LINHA = "Mostrar linhas";
 	public static final String DESENHA_NUMERO = "Mostrar numeros";
 	public static final String EMBARALHAR = "Embaralhar";
+	public static final String NAO_DESENHA_FOTO = "Não mostrar foto";
 	public static final String NAO_DESENHA_LINHA = "Não mostrar linhas";
 	public static final String NAO_DESENHA_NUMERO = "Não mostrar numeros";
 	public static final String NAO_SALVAR = "Não Salvar";
@@ -34,7 +37,8 @@ public class Mensagens {
 	public static final String VOLTAR = "Voltar";
 
 	// Mensagens
-	public static final String DELETAR_FOTO_PADRAO = "Foto padrão não pode ser deletada."; 
+	public static final String DELETAR_FOTO_PADRAO = "Foto padrão não pode ser deletada.";
+	public static final String ERRO_NAO_SUPORTADO = "Desculpe, este aparelho não possui suporte a esta opção.";
 	public static final String NOME = "Nome";
 	public static final String NOME_PADRAO = "15-Puzzle";
 	public static final String PARABENS = "Parabens vc ganhou!";

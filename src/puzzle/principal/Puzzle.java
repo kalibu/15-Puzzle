@@ -50,6 +50,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	private Imagens imagens;
 
 	// Botões
+	private Command desenhaFoto;
 	private Command desenhaLinha;
 	private Command desenhaNumero;
 	private Command embaralhar;
@@ -68,6 +69,7 @@ public class Puzzle extends Canvas implements CommandListener {
 
 	private long tempoJog = 0;
 
+	private boolean desenharFoto = true;
 	private boolean desenharLinha = true;
 	private boolean desenharNumero = true;
 
@@ -87,8 +89,8 @@ public class Puzzle extends Canvas implements CommandListener {
 		movimentos = new Movimentos(this);
 
 		carregarOpcoesJogo();
-		embaralhar = new Command(Mensagens.EMBARALHAR, Command.SCREEN, 3);
-		sair = new Command(Mensagens.SAIR, Command.SCREEN, 4);
+		embaralhar = new Command(Mensagens.EMBARALHAR, Command.ITEM, 3);
+		sair = new Command(Mensagens.SAIR, Command.ITEM, 4);
 
 		addCommand(embaralhar);
 		addCommand(sair);
@@ -156,8 +158,11 @@ public class Puzzle extends Canvas implements CommandListener {
 
 		g.setColor(corLinha);
 
-		desenhar(g, DESENHO);
-		desenho.paint(g);
+		// desenha a foto
+		if (desenharFoto) {
+			desenhar(g, DESENHO);
+			desenho.paint(g);
+		}
 
 		// desenha as linhas
 		if (desenharLinha) {
@@ -233,6 +238,11 @@ public class Puzzle extends Canvas implements CommandListener {
 			this.removeCommand(desenhaNumero);
 			carregaOpcaoDesenharNumeros();
 			repaint();
+		} else if (c == this.desenhaFoto) {
+			desenharFoto = !desenharFoto;
+			this.removeCommand(desenhaFoto);
+			carregaOpcaoDesenharFoto();
+			repaint();
 		}
 	}
 
@@ -307,6 +317,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * Carrega as opcoes do jogo de acordo com a escolha do jogador
 	 */
 	private void carregarOpcoesJogo() {
+		carregaOpcaoDesenharFoto();
 		carregaOpcaoDesenharLinhas();
 		carregaOpcaoDesenharNumeros();
 	}
@@ -317,7 +328,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	private void carregaOpcaoDesenharNumeros() {
 		desenhaNumero = new Command(
 				desenharNumero ? Mensagens.NAO_DESENHA_NUMERO
-						: Mensagens.DESENHA_NUMERO, Command.SCREEN, 1);
+						: Mensagens.DESENHA_NUMERO, Command.ITEM, 1);
 		addCommand(desenhaNumero);
 	}
 
@@ -326,8 +337,17 @@ public class Puzzle extends Canvas implements CommandListener {
 	 */
 	private void carregaOpcaoDesenharLinhas() {
 		desenhaLinha = new Command(desenharLinha ? Mensagens.NAO_DESENHA_LINHA
-				: Mensagens.DESENHA_LINHA, Command.SCREEN, 2);
+				: Mensagens.DESENHA_LINHA, Command.ITEM, 2);
 		addCommand(desenhaLinha);
+	}
+
+	/**
+	 * Carrega a opcao de desenhar foto.
+	 */
+	private void carregaOpcaoDesenharFoto() {
+		desenhaFoto = new Command(desenharFoto ? Mensagens.NAO_DESENHA_FOTO
+				: Mensagens.DESENHA_FOTO, Command.ITEM, 3);
+		addCommand(desenhaFoto);
 	}
 
 	/**

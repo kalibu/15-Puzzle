@@ -143,7 +143,7 @@ public class ManterFoto {
 		DadosJogo dadosJogo = new DadosJogo();
 
 		int numImagemSelecionada = dadosJogo.getNumImagemSelecionada();
-		
+
 		if (numImagemSelecionada == foto) {
 			dadosJogo.salvarImagemSelecionada(0);
 		}

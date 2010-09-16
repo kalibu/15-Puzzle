@@ -1,5 +1,7 @@
 package puzzle.foto;
 
+import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -58,9 +60,15 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 			player = Manager.createPlayer("capture://video");
 			player.realize();
 		} catch (Exception e) {
+			
+			//so dispara esse erro caso ñ tiver acesso a camera
+			Alert alert = new Alert(Mensagens.ERRO, Mensagens.ERRO_NAO_SUPORTADO, null, AlertType.ERROR);
+			alert.setTimeout(Alert.FOREVER);
+			Display.getDisplay(midlet).setCurrent(alert, new Menu(midlet));
+			
 			e.printStackTrace();
 		}
-
+		
 		videoControl = (VideoControl) player.getControl("VideoControl");
 
 		videoControl.initDisplayMode(VideoControl.USE_DIRECT_VIDEO, this);

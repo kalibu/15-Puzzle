@@ -12,7 +12,6 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
 import puzzle.foto.Fotos;
-import puzzle.foto.TirarFoto;
 import puzzle.principal.Puzzle;
 import puzzle.ranking.Ranking;
 import puzzle.util.Imagens;

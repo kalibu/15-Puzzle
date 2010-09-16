@@ -118,6 +118,8 @@ public class Fotos implements CommandListener {
 				Display.getDisplay(midlet).setCurrent(a, fotos);
 			} else {
 				manterFoto.deletaFoto(fotos.getSelectedIndex());
+				//zerar classe para atualizar valores
+				dadosJogo = new DadosJogo();
 				carregarFotos();
 			}
 		}
