@@ -48,6 +48,11 @@ public class Ranking extends Canvas implements CommandListener {
 
 	private Command voltar;
 
+	private int deslocamentoX = 0;
+	private int deslocamentoY = 0;
+
+	private int margemMovimento = 10;
+
 	public Ranking(MIDlet midlet) {
 		this.voltar = new Command(Mensagens.VOLTAR, Command.SCREEN, 1);
 		this.addCommand(voltar);
@@ -73,12 +78,20 @@ public class Ranking extends Canvas implements CommandListener {
 
 		int y = 40;
 		DadosRanking[] dados = carregaLista(getNomeBanco());
-		g.drawString("Nome   -   Jogadas   -   Tempo", getWidth() / 2, 20,
+		g.drawString(Mensagens.TITULO_RANKING,
+				(getWidth() / 2) + deslocamentoX, 20 + deslocamentoY,
 				Graphics.HCENTER | Graphics.BASELINE);
 		for (int i = 0; i < dados.length; i++) {
-			g.drawString(getRankingFormatado(dados[i]), getWidth() / 2, y,
-					Graphics.HCENTER | Graphics.BASELINE);
-			y += 10;
+			int posX = (getWidth() / 2) + deslocamentoX;
+			int posY = y + deslocamentoY;
+			// verifica se vai pintar dentro da tela
+			if ((posY >= 0) || (posY <= getHeight())) {
+				g.drawString((i + 1) + Mensagens.RANKING_POSICAO
+						+ getRankingFormatado(dados[i]), posX, posY,
+						Graphics.HCENTER | Graphics.BASELINE);
+			}
+
+			y += g.getFont().getHeight();
 		}
 	}
 
@@ -214,7 +227,8 @@ public class Ranking extends Canvas implements CommandListener {
 	 * @return Retorna uma string com os dados do ranking formatado.
 	 */
 	private String getRankingFormatado(DadosRanking d) {
-		String dado = d.getNome() + " - " + d.getMovimentos() + " - "
+		String dado = d.getNome() + Mensagens.RANKING_DIVISOR
+				+ d.getMovimentos() + Mensagens.RANKING_DIVISOR
 				+ d.getTempoFormatado();
 
 		return dado;
@@ -268,5 +282,44 @@ public class Ranking extends Canvas implements CommandListener {
 		}
 
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+	 */
+	protected void keyPressed(int keyCode) {
+		// cima
+		if ((keyCode == Canvas.KEY_NUM2)
+				|| (getGameAction(keyCode) == Canvas.UP)) {
+			deslocamentoY -= margemMovimento;
+		} else
+		// baixo
+		if ((keyCode == Canvas.KEY_NUM8)
+				|| (getGameAction(keyCode) == Canvas.DOWN)) {
+			deslocamentoY += margemMovimento;
+		} else
+		// esquerda
+		if ((keyCode == Canvas.KEY_NUM4)
+				|| (getGameAction(keyCode) == Canvas.LEFT)) {
+			deslocamentoX -= margemMovimento;
+		} else
+		// baixo
+		if ((keyCode == Canvas.KEY_NUM6)
+				|| (getGameAction(keyCode) == Canvas.RIGHT)) {
+			deslocamentoX += margemMovimento;
+		}
+
+		repaint();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.microedition.lcdui.Canvas#keyRepeated(int)
+	 */
+	protected void keyRepeated(int keyCode) {
+		keyPressed(keyCode);
 	}
 }

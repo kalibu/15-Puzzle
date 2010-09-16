@@ -11,13 +11,17 @@ public class Mensagens {
 
 	// Titulos
 	public static final String CONFIGURACAO = "Configuração";
+	public final static String CREDITOS = "creditos";
 	public static final String ERRO = "Erro";
 	public static final String FOTO = "Foto";
 	public static final String FOTO_PADRAO = "Foto padrão";
 	public static final String FOTOS = "Fotos";
 	public static final String MSG_ADD_RANKING = "Digite seu nome";
 	public static final String RANKING = "Ranking";
+	public static final String RANKING_DIVISOR = " <-> ";
+	public static final String RANKING_POSICAO = "º - ";
 	public static final String TITULO = "15-Puzzle";
+	public static final String TITULO_RANKING = "Nome <---> Jogadas <---> Tempo";
 
 	// Botões
 	public static final String DEFINIR = "Definir como padrão";
@@ -39,6 +43,7 @@ public class Mensagens {
 	// Mensagens
 	public static final String DELETAR_FOTO_PADRAO = "Foto padrão não pode ser deletada.";
 	public static final String ERRO_NAO_SUPORTADO = "Desculpe, este aparelho não possui suporte a esta opção.";
+	public final static String MSG_CREDITOS = "Desenvolvido por: \nDavid Almeida Pitanguy";
 	public static final String NOME = "Nome";
 	public static final String NOME_PADRAO = "15-Puzzle";
 	public static final String PARABENS = "Parabens vc ganhou!";

@@ -10,8 +10,9 @@ package puzzle.util;
  */
 public class Imagens {
 
-	//IMAGENS
+	// IMAGENS
 	public final static String CONFIGURACAO = "configuracao";
+	public final static String CREDITOS = "creditos";
 	public final static String FUNDO = "fundo";
 	public final static String IMAGEM_PADRAO = "imagemPadrao";
 	public final static String INICIAR = "iniciar";
@@ -20,10 +21,11 @@ public class Imagens {
 	public final static String SAIR = "sair";
 	public final static String SIM = "sim";
 	public final static String TIRAR_FOTO = "tirarFoto";
+	public final static String TROFEU = "trofeu";
 
 	public final static String SELECIONADO = "_selecionado";
-	
-	//CONFIGURAÇÃO - USO INTERNO DA CLASSE
+
+	// CONFIGURAÇÃO - USO INTERNO DA CLASSE
 	public final static String CAMINHO = "/";
 	private final String TIPO_IMAGEM = ".png";
 

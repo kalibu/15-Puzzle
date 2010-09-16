@@ -5,6 +5,8 @@ package puzzle.menu;
 
 import java.io.IOException;
 
+import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
@@ -15,6 +17,7 @@ import puzzle.foto.Fotos;
 import puzzle.principal.Puzzle;
 import puzzle.ranking.Ranking;
 import puzzle.util.Imagens;
+import puzzle.util.Mensagens;
 
 /**
  * Menu principal do jogo.
@@ -39,7 +42,8 @@ public class Menu extends Canvas {
 
 	// Guarda os menus do jogo
 	private String menu[][] = {
-			{ Imagens.INICIAR, Imagens.RANKING, Imagens.CONFIGURACAO, Imagens.TIRAR_FOTO, Imagens.SAIR },
+			{ Imagens.INICIAR, Imagens.RANKING, Imagens.CONFIGURACAO,
+					Imagens.TIRAR_FOTO, Imagens.CREDITOS, Imagens.SAIR },
 			{ Imagens.SIM, Imagens.NAO } };
 
 	public Menu(MIDlet midlet) {
@@ -156,14 +160,23 @@ public class Menu extends Canvas {
 			Display.getDisplay(midlet).setCurrent(new Ranking(midlet));
 			break;
 		}
-		// configuracao
+			// configuracao
 		case 2: {
 			Display.getDisplay(midlet).setCurrent(new Configuracao(midlet));
 			break;
 		}
-		// tirar foto
+			// tirar foto
 		case 3: {
 			new Fotos(midlet);
+			break;
+		}
+			// creditos
+		case 4: {
+			Alert creditos = new Alert(Mensagens.CREDITOS,
+					Mensagens.MSG_CREDITOS, null, AlertType.INFO);
+			creditos.setTimeout(Alert.FOREVER);
+
+			Display.getDisplay(midlet).setCurrent(creditos, this);
 			break;
 		}
 			// sair
@@ -193,25 +206,28 @@ public class Menu extends Canvas {
 		}
 		}
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
 	 */
 	protected void pointerPressed(int x, int y) {
-		//trata o touch dos menus
+		// trata o touch dos menus
 		int xi = (getWidth() / 2) - (larguraItem / 2);
-		int yi = getAlturaPintaItem(menu[menuSelecionado].length) - (alturaItem / 2);
-		
+		int yi = getAlturaPintaItem(menu[menuSelecionado].length)
+				- (alturaItem / 2);
+
 		for (int i = 0; i < menu[menuSelecionado].length; i++) {
 			int xf = xi + larguraItem;
 			int yf = yi + alturaItem;
-			
-			if((xi <= x) && (x <= xf) && (yi <= y) && (y <= yf)){
+
+			if ((xi <= x) && (x <= xf) && (yi <= y) && (y <= yf)) {
 				itemSelecionado = i;
 				menus();
 				repaint();
 			}
-			
+
 			yi += alturaItem + margemItem;
 		}
 	}

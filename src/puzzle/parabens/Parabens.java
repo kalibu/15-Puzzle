@@ -3,16 +3,20 @@
  */
 package puzzle.parabens;
 
+import java.io.IOException;
 import java.util.Random;
 
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Ticker;
 import javax.microedition.midlet.MIDlet;
 
 import puzzle.ranking.AdicionarRanking;
 import puzzle.ranking.Ranking;
+import puzzle.util.ImagemUtil;
+import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
 
 /**
@@ -32,12 +36,15 @@ public class Parabens extends Canvas {
 
 	private PontoVoador pontos[] = new PontoVoador[QUANTIDADE_PONTOS];
 
-	private int corFundo = 0x000000;
-
 	private boolean animar = true;
-	
+
 	private Ranking ranking;
-	
+
+	private Imagens imagens;
+	private ImagemUtil imagemUtil;
+
+	private Image trofeu;
+
 	private long tempoJog;
 	private long movimentosJog;
 
@@ -45,12 +52,24 @@ public class Parabens extends Canvas {
 
 		this.midlet = midlet;
 
+		this.imagemUtil = new ImagemUtil();
+		this.imagens = new Imagens();
+
 		this.setTicker(new Ticker(Mensagens.PARABENS));
-		
+
 		this.ranking = new Ranking(midlet);
-		
+
 		this.tempoJog = tempo;
 		this.movimentosJog = movimentos;
+
+		try {
+			trofeu = imagemUtil
+					.redimencionarImagem(Image.createImage(imagens
+							.getCaminhoImagem(Imagens.TROFEU)), getWidth(),
+							getHeight());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		inicializarPontos();
 
@@ -58,7 +77,7 @@ public class Parabens extends Canvas {
 	}
 
 	/**
-	 *  Inicializa todos os pontos.
+	 * Inicializa todos os pontos.
 	 */
 	private void inicializarPontos() {
 		new Thread(new Runnable() {
@@ -91,8 +110,8 @@ public class Parabens extends Canvas {
 	 */
 	protected void paint(Graphics g) {
 
-		g.setColor(corFundo);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawImage(trofeu, getWidth() / 2, getHeight() / 2, Graphics.HCENTER
+				| Graphics.VCENTER);
 
 		for (int i = 0; i < pontos.length; i++) {
 			if (pontos[i] != null) {
@@ -111,7 +130,7 @@ public class Parabens extends Canvas {
 	 */
 	private void animar() {
 		new Thread(new Runnable() {
-			
+
 			public void run() {
 				while (animar) {
 					repaint();
@@ -124,36 +143,43 @@ public class Parabens extends Canvas {
 		}).start();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.lcdui.Canvas#keyPressed(int)
 	 */
 	protected void keyPressed(int keyCode) {
-		
-		if((keyCode == Canvas.KEY_NUM5) || (getGameAction(keyCode) == Canvas.FIRE)){
+
+		if ((keyCode == Canvas.KEY_NUM5)
+				|| (getGameAction(keyCode) == Canvas.FIRE)) {
 			iniciarMenu();
 		}
-		
+
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
 	 */
 	protected void pointerPressed(int x, int y) {
 		iniciarMenu();
 	}
-	
+
 	/**
 	 * Passa para proxima tela, que é o menu
 	 */
-	private void iniciarMenu(){
+	private void iniciarMenu() {
 		animar = false;
-		
-		if(ranking.isPodeAdicionar(this.movimentosJog)){
-			Display.getDisplay(this.midlet).setCurrent(new AdicionarRanking(this.midlet, this.tempoJog, this.movimentosJog));
-		}else{			
-			Display.getDisplay(this.midlet).setCurrent(new Ranking(this.midlet));	
+
+		if (ranking.isPodeAdicionar(this.movimentosJog)) {
+			Display.getDisplay(this.midlet).setCurrent(
+					new AdicionarRanking(this.midlet, this.tempoJog,
+							this.movimentosJog));
+		} else {
+			Display.getDisplay(this.midlet)
+					.setCurrent(new Ranking(this.midlet));
 		}
 	}
-
 
 }
