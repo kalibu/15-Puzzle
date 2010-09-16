@@ -41,7 +41,7 @@ public class Mensagens {
 	public static final String VOLTAR = "Voltar";
 
 	// Mensagens
-	public static final String DELETAR_FOTO_PADRAO = "Foto padrão não pode ser deletada.";
+	public static final String DELETAR_FOTO_PADRAO = "Fotos padrões não podem ser deletadas.";
 	public static final String ERRO_NAO_SUPORTADO = "Desculpe, este aparelho não possui suporte a esta opção.";
 	public final static String MSG_CREDITOS = "Desenvolvido por: \nDavid Almeida Pitanguy";
 	public static final String NOME = "Nome";

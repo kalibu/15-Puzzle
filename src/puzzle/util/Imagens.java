@@ -14,7 +14,7 @@ public class Imagens {
 	public final static String CONFIGURACAO = "configuracao";
 	public final static String CREDITOS = "creditos";
 	public final static String FUNDO = "fundo";
-	public final static String IMAGEM_PADRAO = "imagemPadrao";
+	public final static String IMAGEM_PADRAO = "imagemPadrao_";
 	public final static String INICIAR = "iniciar";
 	public final static String NAO = "nao";
 	public final static String RANKING = "ranking";

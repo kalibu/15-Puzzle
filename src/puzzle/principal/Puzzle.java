@@ -1,6 +1,5 @@
 package puzzle.principal;
 
-import java.io.IOException;
 import java.util.Calendar;
 
 import javax.microedition.lcdui.Canvas;
@@ -18,7 +17,6 @@ import puzzle.menu.Menu;
 import puzzle.parabens.Parabens;
 import puzzle.util.DadosJogo;
 import puzzle.util.ImagemUtil;
-import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
 
 /**
@@ -47,7 +45,6 @@ public class Puzzle extends Canvas implements CommandListener {
 	private JogoUtils jogoUtils;
 	private Movimentos movimentos;
 	private DadosJogo dadosJogo;
-	private Imagens imagens;
 
 	// Botões
 	private Command desenhaFoto;
@@ -110,8 +107,6 @@ public class Puzzle extends Canvas implements CommandListener {
 
 		movimentos.embaralhar();
 
-		imagens = new Imagens();
-
 		carregarDesenho();
 
 		this.tempoJog = Calendar.getInstance().getTime().getTime();
@@ -123,24 +118,13 @@ public class Puzzle extends Canvas implements CommandListener {
 	 */
 	private void carregarDesenho() {
 
-		Image imagem = null;
-
-		// se imagem selecionada for zero, carrega imagem padrao
-		if (dadosJogo.getNumImagemSelecionada() == 0) {
-			try {
-				imagem = Image.createImage(imagens
-						.getCaminhoImagem(Imagens.IMAGEM_PADRAO));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			imagem = new ManterFoto().carregarFoto(dadosJogo
-					.getNumImagemSelecionada());
-		}
+		Image imagem = new ManterFoto().carregarFoto(dadosJogo
+				.getNumImagemSelecionada());
 
 		imagem = new ImagemUtil().redimencionarImagem(imagem, larguraPeca
 				* dadosJogo.getQtdPcsJogo(),
 				alturaPeca * dadosJogo.getQtdPcsJogo());
+		
 		desenho = new TiledLayer(dadosJogo.getQtdPcsJogo(),
 				dadosJogo.getQtdPcsJogo(), imagem, larguraPeca, alturaPeca);
 	}

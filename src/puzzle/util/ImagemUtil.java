@@ -12,6 +12,21 @@ import javax.microedition.lcdui.Image;
  */
 public class ImagemUtil {
 
+	/**
+	 * Muda a escala do array
+	 * 
+	 * @param ini
+	 *            Array de entrada
+	 * @param x
+	 *            X Inicial
+	 * @param y
+	 *            Y Inicial
+	 * @param x2
+	 *            X Final
+	 * @param y2
+	 *            Y Final
+	 * @return Retorna um array de inteiros redimencionado
+	 */
 	private int[] reescalaArray(int[] ini, int x, int y, int x2, int y2) {
 		int out[] = new int[x2 * y2];
 
@@ -26,7 +41,17 @@ public class ImagemUtil {
 		return out;
 	}
 
-	public Image redimencionarImagem(Image imagem, int novaLargura, int novaAltura) {
+	/**
+	 * @param imagem
+	 *            Imagem a ser redimencionada
+	 * @param novaLargura
+	 *            Nova largura
+	 * @param novaAltura
+	 *            Nova altura
+	 * @return Retorna a imagem redimencionada.
+	 */
+	public Image redimencionarImagem(Image imagem, int novaLargura,
+			int novaAltura) {
 
 		// array para guardar o rgb da imagem original
 		int rgb[] = new int[imagem.getWidth() * imagem.getHeight()];
