@@ -33,6 +33,7 @@ public class Menu extends Canvas {
 	private int menuSelecionado = MENU_PRINCIPAL;
 	private int itemSelecionado = 0;
 
+	private int larguraItem = 150;
 	private int alturaItem = 20;
 	private int margemItem = alturaItem / 2;
 
@@ -190,6 +191,28 @@ public class Menu extends Canvas {
 			itemSelecionado = 0;
 			break;
 		}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
+	 */
+	protected void pointerPressed(int x, int y) {
+		//trata o touch dos menus
+		int xi = (getWidth() / 2) - (larguraItem / 2);
+		int yi = getAlturaPintaItem(menu[menuSelecionado].length) - (alturaItem / 2);
+		
+		for (int i = 0; i < menu[menuSelecionado].length; i++) {
+			int xf = xi + larguraItem;
+			int yf = yi + alturaItem;
+			
+			if((xi <= x) && (x <= xf) && (yi <= y) && (y <= yf)){
+				itemSelecionado = i;
+				menus();
+				repaint();
+			}
+			
+			yi += alturaItem + margemItem;
 		}
 	}
 

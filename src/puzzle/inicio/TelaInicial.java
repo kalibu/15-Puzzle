@@ -12,6 +12,7 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
 import puzzle.menu.Menu;
+import puzzle.util.ImagemUtil;
 import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
 
@@ -29,6 +30,8 @@ public class TelaInicial extends Canvas{
 	
 	private Imagens imagens;
 	
+	private ImagemUtil imagemUtil;
+	
 	/**
 	 * @param midlet
 	 */
@@ -36,9 +39,12 @@ public class TelaInicial extends Canvas{
 		this.midlet = midlet;
 		
 		this.imagens = new Imagens();
+		this.imagemUtil = new ImagemUtil();
 		
 		try {
-			fundo = Image.createImage(imagens.getCaminhoImagem(Imagens.FUNDO));
+			Image image = Image.createImage(imagens.getCaminhoImagem(Imagens.FUNDO));
+			
+			fundo = imagemUtil.redimencionarImagem(image, getWidth(), getHeight());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
