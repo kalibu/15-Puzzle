@@ -10,13 +10,13 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.TiledLayer;
-import javax.microedition.midlet.MIDlet;
 
 import puzzle.foto.ManterFoto;
 import puzzle.menu.Menu;
 import puzzle.parabens.Parabens;
 import puzzle.util.DadosJogo;
 import puzzle.util.ImagemUtil;
+import puzzle.util.JogoUtils;
 import puzzle.util.Mensagens;
 
 /**
@@ -39,7 +39,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	private int corFundo = 0xFFFFFF;
 	private int corLinha = 0xFF0000;
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	// Classe auxiliares
 	private JogoUtils jogoUtils;
@@ -76,11 +76,13 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * 
 	 * @param midlet
 	 */
-	public Puzzle(MIDlet midlet) {
+	public Puzzle(PuzzleMIDlet midlet) {
+		this.midlet = midlet;
+		this.midlet.setDisplayable(this);
+		
 		dadosJogo = new DadosJogo();
 
 		setTitle(Mensagens.TITULO);
-		this.midlet = midlet;
 
 		jogoUtils = new JogoUtils();
 		movimentos = new Movimentos(this);

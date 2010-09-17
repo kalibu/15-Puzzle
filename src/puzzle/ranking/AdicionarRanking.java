@@ -9,8 +9,8 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.TextField;
-import javax.microedition.midlet.MIDlet;
 
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.util.Mensagens;
 
 /**
@@ -20,7 +20,7 @@ import puzzle.util.Mensagens;
  */
 public class AdicionarRanking extends Form implements CommandListener {
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	private TextField tf;
 
@@ -39,7 +39,7 @@ public class AdicionarRanking extends Form implements CommandListener {
 	 * @param tempo Tempo do jogador.
 	 * @param movimentos Movimentos do jogador.
 	 */
-	public AdicionarRanking(MIDlet midlet, long tempo, long movimentos) {
+	public AdicionarRanking(PuzzleMIDlet midlet, long tempo, long movimentos) {
 		super(Mensagens.MSG_ADD_RANKING);
 
 		this.midlet = midlet;

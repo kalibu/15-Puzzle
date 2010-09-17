@@ -11,10 +11,10 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-import javax.microedition.midlet.MIDlet;
 
 import puzzle.foto.Fotos;
 import puzzle.principal.Puzzle;
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.ranking.Ranking;
 import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
@@ -26,7 +26,7 @@ import puzzle.util.Mensagens;
  */
 public class Menu extends Canvas {
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	private final int MENU_PRINCIPAL = 0;
 	private final int MENU_CONFIRMACAO = 1;
@@ -46,8 +46,9 @@ public class Menu extends Canvas {
 					Imagens.TIRAR_FOTO, Imagens.CREDITOS, Imagens.SAIR },
 			{ Imagens.SIM, Imagens.NAO } };
 
-	public Menu(MIDlet midlet) {
+	public Menu(PuzzleMIDlet midlet) {
 		this.midlet = midlet;
+		this.midlet.setDisplayable(this);
 
 		this.imagens = new Imagens();
 	}

@@ -9,9 +9,9 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-import javax.microedition.midlet.MIDlet;
 
 import puzzle.menu.Menu;
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.util.ImagemUtil;
 import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
@@ -24,7 +24,7 @@ import puzzle.util.Mensagens;
  */
 public class TelaInicial extends Canvas{
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 	
 	private Image fundo;
 	
@@ -35,7 +35,7 @@ public class TelaInicial extends Canvas{
 	/**
 	 * @param midlet
 	 */
-	public TelaInicial(MIDlet midlet) {
+	public TelaInicial(PuzzleMIDlet midlet) {
 		this.midlet = midlet;
 		
 		this.imagens = new Imagens();

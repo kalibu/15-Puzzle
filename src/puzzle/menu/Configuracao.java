@@ -9,8 +9,8 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Gauge;
-import javax.microedition.midlet.MIDlet;
 
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.util.DadosJogo;
 import puzzle.util.Mensagens;
 
@@ -21,7 +21,7 @@ import puzzle.util.Mensagens;
  */
 public class Configuracao extends Form implements CommandListener {
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	private DadosJogo dadosJogo;
 
@@ -31,7 +31,7 @@ public class Configuracao extends Form implements CommandListener {
 
 	private Gauge pecas;
 
-	public Configuracao(MIDlet midlet) {
+	public Configuracao(PuzzleMIDlet midlet) {
 		super(Mensagens.CONFIGURACAO);
 
 		this.dadosJogo = new DadosJogo();
@@ -48,6 +48,7 @@ public class Configuracao extends Form implements CommandListener {
 		this.append(Mensagens.QTD_PCS_MIN);
 
 		this.midlet = midlet;
+		this.midlet.setDisplayable(this);
 	}
 
 	/*

@@ -1,7 +1,7 @@
 package puzzle.principal;
 
-import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
@@ -12,13 +12,13 @@ import puzzle.inicio.TelaInicial;
  */
 public class PuzzleMIDlet extends MIDlet {
 
-	private Canvas canvas;
+	private Displayable displayable;
 
 	/**
 	 * Construtor responsavel por definir a tela que ira aparecer.
 	 */
 	public PuzzleMIDlet() {
-		canvas = new TelaInicial(this);
+		displayable = new TelaInicial(this);
 	}
 
 	/*
@@ -36,7 +36,7 @@ public class PuzzleMIDlet extends MIDlet {
 	 * @see javax.microedition.midlet.MIDlet#pauseApp()
 	 */
 	protected void pauseApp() {
-
+		
 	}
 
 	/*
@@ -45,7 +45,18 @@ public class PuzzleMIDlet extends MIDlet {
 	 * @see javax.microedition.midlet.MIDlet#startApp()
 	 */
 	protected void startApp() throws MIDletStateChangeException {
-		Display.getDisplay(this).setCurrent(canvas);
+		Display.getDisplay(this).setCurrent(displayable);
+	}
+
+	/**
+	 * Serve para tratar o pause.
+	 * 
+	 * @param canvas
+	 *            Recebe o canvas que ira setar como principal ao voltar ao
+	 *            jogo.
+	 */
+	public void setDisplayable(Displayable displayable) {
+		this.displayable = displayable;
 	}
 
 }

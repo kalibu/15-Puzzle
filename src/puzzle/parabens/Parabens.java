@@ -3,7 +3,6 @@
  */
 package puzzle.parabens;
 
-import java.io.IOException;
 import java.util.Random;
 
 import javax.microedition.lcdui.Canvas;
@@ -11,12 +10,13 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Ticker;
-import javax.microedition.midlet.MIDlet;
 
+import puzzle.foto.ManterFoto;
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.ranking.AdicionarRanking;
 import puzzle.ranking.Ranking;
+import puzzle.util.DadosJogo;
 import puzzle.util.ImagemUtil;
-import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
 
 /**
@@ -26,7 +26,7 @@ import puzzle.util.Mensagens;
  */
 public class Parabens extends Canvas {
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	private static final int QUANTIDADE_PONTOS = 100;
 	private static final int TAMANHO_PONTO = 3;
@@ -40,20 +40,23 @@ public class Parabens extends Canvas {
 
 	private Ranking ranking;
 
-	private Imagens imagens;
 	private ImagemUtil imagemUtil;
+	private DadosJogo dadosJogo;
+	private ManterFoto manterFoto;
 
-	private Image trofeu;
+	private Image foto;
 
 	private long tempoJog;
 	private long movimentosJog;
 
-	public Parabens(MIDlet midlet, long tempo, long movimentos) {
+	public Parabens(PuzzleMIDlet midlet, long tempo, long movimentos) {
 
 		this.midlet = midlet;
+		this.midlet.setDisplayable(this);
 
 		this.imagemUtil = new ImagemUtil();
-		this.imagens = new Imagens();
+		this.dadosJogo = new DadosJogo();
+		this.manterFoto = new ManterFoto();
 
 		this.setTicker(new Ticker(Mensagens.PARABENS));
 
@@ -62,14 +65,9 @@ public class Parabens extends Canvas {
 		this.tempoJog = tempo;
 		this.movimentosJog = movimentos;
 
-		try {
-			trofeu = imagemUtil
-					.redimencionarImagem(Image.createImage(imagens
-							.getCaminhoImagem(Imagens.TROFEU)), getWidth(),
-							getHeight());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		foto = imagemUtil.redimencionarImagem(
+				manterFoto.carregarFoto(dadosJogo.getNumImagemSelecionada()),
+				getWidth(), getHeight());
 
 		inicializarPontos();
 
@@ -110,7 +108,7 @@ public class Parabens extends Canvas {
 	 */
 	protected void paint(Graphics g) {
 
-		g.drawImage(trofeu, getWidth() / 2, getHeight() / 2, Graphics.HCENTER
+		g.drawImage(foto, getWidth() / 2, getHeight() / 2, Graphics.HCENTER
 				| Graphics.VCENTER);
 
 		for (int i = 0; i < pontos.length; i++) {

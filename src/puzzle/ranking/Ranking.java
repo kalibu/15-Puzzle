@@ -10,13 +10,13 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Ticker;
-import javax.microedition.midlet.MIDlet;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 
 import puzzle.menu.Menu;
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.util.BancoUtil;
 import puzzle.util.DadosJogo;
 import puzzle.util.Mensagens;
@@ -28,7 +28,7 @@ import puzzle.util.Mensagens;
  */
 public class Ranking extends Canvas implements CommandListener {
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	private final int QTD_MAX_RANKING = 100;
 
@@ -53,12 +53,13 @@ public class Ranking extends Canvas implements CommandListener {
 
 	private int margemMovimento = 10;
 
-	public Ranking(MIDlet midlet) {
+	public Ranking(PuzzleMIDlet midlet) {
+		this.midlet = midlet;
+		this.midlet.setDisplayable(this);
+
 		this.voltar = new Command(Mensagens.VOLTAR, Command.SCREEN, 1);
 		this.addCommand(voltar);
 		this.setCommandListener(this);
-
-		this.midlet = midlet;
 
 		this.dadosJogo = new DadosJogo();
 

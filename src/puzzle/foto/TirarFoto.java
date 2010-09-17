@@ -15,9 +15,9 @@ import javax.microedition.media.Manager;
 import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.control.VideoControl;
-import javax.microedition.midlet.MIDlet;
 
 import puzzle.menu.Menu;
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.util.ImagemUtil;
 import puzzle.util.Mensagens;
 
@@ -37,15 +37,16 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 
 	private Form mostraFoto;
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	private byte[] foto;
 
 	private ManterFoto manterFoto;
 
-	public TirarFoto(MIDlet midlet) {
+	public TirarFoto(PuzzleMIDlet midlet) {
 
 		this.midlet = midlet;
+		this.midlet.setDisplayable(this);
 
 		this.manterFoto = new ManterFoto();
 
@@ -60,15 +61,16 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 			player = Manager.createPlayer("capture://video");
 			player.realize();
 		} catch (Exception e) {
-			
-			//so dispara esse erro caso ñ tiver acesso a camera
-			Alert alert = new Alert(Mensagens.ERRO, Mensagens.ERRO_NAO_SUPORTADO, null, AlertType.ERROR);
+
+			// so dispara esse erro caso ñ tiver acesso a camera
+			Alert alert = new Alert(Mensagens.ERRO,
+					Mensagens.ERRO_NAO_SUPORTADO, null, AlertType.ERROR);
 			alert.setTimeout(Alert.FOREVER);
 			Display.getDisplay(midlet).setCurrent(alert, new Menu(midlet));
-			
+
 			e.printStackTrace();
 		}
-		
+
 		videoControl = (VideoControl) player.getControl("VideoControl");
 
 		videoControl.initDisplayMode(VideoControl.USE_DIRECT_VIDEO, this);
@@ -113,7 +115,7 @@ public class TirarFoto extends Canvas implements CommandListener, Runnable {
 			if (c == this.salvarFoto) {
 				salvarImagem();
 				new Fotos(midlet);
-			}else{				
+			} else {
 				mostraFoto.deleteAll();
 				Display.getDisplay(midlet).setCurrent(this);
 			}

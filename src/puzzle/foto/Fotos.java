@@ -10,9 +10,9 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.List;
-import javax.microedition.midlet.MIDlet;
 
 import puzzle.menu.Menu;
+import puzzle.principal.PuzzleMIDlet;
 import puzzle.util.DadosJogo;
 import puzzle.util.ImagemUtil;
 import puzzle.util.Mensagens;
@@ -24,7 +24,7 @@ import puzzle.util.Mensagens;
  */
 public class Fotos implements CommandListener {
 
-	private MIDlet midlet;
+	private PuzzleMIDlet midlet;
 
 	private Command voltar;
 	private Command salvar;
@@ -37,11 +37,11 @@ public class Fotos implements CommandListener {
 
 	private int tamFoto = 32;
 
-	public static final int QTD_FOTOS_PADRAO = 4;
+	public static final int QTD_FOTOS_PADRAO = 5;
 
 	private List fotos;
 
-	public Fotos(MIDlet midlet) {
+	public Fotos(PuzzleMIDlet midlet) {
 		this.midlet = midlet;
 
 		this.imagemUtil = new ImagemUtil();
@@ -66,6 +66,8 @@ public class Fotos implements CommandListener {
 		carregarFotos();
 
 		Display.getDisplay(midlet).setCurrent(fotos);
+
+		this.midlet.setDisplayable(fotos);
 	}
 
 	/**
@@ -74,7 +76,7 @@ public class Fotos implements CommandListener {
 	private void verificarPrecisaAddImagensPadrao() {
 		if (manterFoto.getTodasImagens().length == 0) {
 
-			byte[] arrayFotosPadroes = {0};
+			byte[] arrayFotosPadroes = { 0 };
 
 			for (int i = 1; i <= QTD_FOTOS_PADRAO; i++) {
 				manterFoto.salvarFoto(arrayFotosPadroes);
@@ -130,6 +132,9 @@ public class Fotos implements CommandListener {
 		}
 	}
 
+	/**
+	 * Volta para o menu principal
+	 */
 	private void voltarMenu() {
 		Display.getDisplay(midlet).setCurrent(new Menu(midlet));
 	}
