@@ -10,6 +10,7 @@ import puzzle.menu.Configuracao;
 public class Mensagens {
 
 	// Titulos
+	public static final String AUDIO = "Audio";
 	public static final String CONFIGURACAO = "Configuração";
 	public final static String CREDITOS = "creditos";
 	public static final String ERRO = "Erro";
@@ -43,6 +44,8 @@ public class Mensagens {
 	// Mensagens
 	public static final String DELETAR_FOTO_PADRAO = "Fotos padrões não podem ser deletadas.";
 	public static final String ERRO_NAO_SUPORTADO = "Desculpe, este aparelho não possui suporte a esta opção.";
+	public static final String LIGADO = "Ligado";
+	public static final String DESLIGADO = "Desligado";
 	public final static String MSG_CREDITOS = "Desenvolvido por: \nDavid Almeida Pitanguy";
 	public static final String NOME = "Nome";
 	public static final String NOME_PADRAO = "15-Puzzle";

@@ -5,6 +5,7 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
+import puzzle.audio.Audio;
 import puzzle.inicio.TelaInicial;
 
 /**
@@ -13,12 +14,14 @@ import puzzle.inicio.TelaInicial;
 public class PuzzleMIDlet extends MIDlet {
 
 	private Displayable displayable;
+	private Audio audio;
 
 	/**
 	 * Construtor responsavel por definir a tela que ira aparecer.
 	 */
 	public PuzzleMIDlet() {
 		displayable = new TelaInicial(this);
+		audio = new Audio();
 	}
 
 	/*
@@ -36,7 +39,9 @@ public class PuzzleMIDlet extends MIDlet {
 	 * @see javax.microedition.midlet.MIDlet#pauseApp()
 	 */
 	protected void pauseApp() {
-		
+		if (audio.isTocando()) {
+			audio.stop();
+		}
 	}
 
 	/*
@@ -46,12 +51,15 @@ public class PuzzleMIDlet extends MIDlet {
 	 */
 	protected void startApp() throws MIDletStateChangeException {
 		Display.getDisplay(this).setCurrent(displayable);
+		if (audio.isTocando()) {
+			audio.start();
+		}
 	}
 
 	/**
 	 * Serve para tratar o pause.
 	 * 
-	 * @param canvas
+	 * @param displayable
 	 *            Recebe o canvas que ira setar como principal ao voltar ao
 	 *            jogo.
 	 */
@@ -59,4 +67,10 @@ public class PuzzleMIDlet extends MIDlet {
 		this.displayable = displayable;
 	}
 
+	/**
+	 * @return the audio
+	 */
+	public Audio getAudio() {
+		return audio;
+	}
 }

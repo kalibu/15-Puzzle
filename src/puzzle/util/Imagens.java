@@ -11,16 +11,18 @@ package puzzle.util;
 public class Imagens {
 
 	// IMAGENS
-	public final static String CONFIGURACAO = "configuracao";
-	public final static String CREDITOS = "creditos";
+	public final static String AUDIO_ON = "audio_on";
+	public final static String AUDIO_OFF = "audio_off";
+	public final static String CONFIGURACAO = "botoes/configuracao";
+	public final static String CREDITOS = "botoes/creditos";
 	public final static String FUNDO = "fundo";
-	public final static String IMAGEM_PADRAO = "imagemPadrao_";
-	public final static String INICIAR = "iniciar";
-	public final static String NAO = "nao";
-	public final static String RANKING = "ranking";
-	public final static String SAIR = "sair";
-	public final static String SIM = "sim";
-	public final static String TIRAR_FOTO = "tirarFoto";
+	public final static String IMAGEM_PADRAO = "imagensPadrao/imagemPadrao_";
+	public final static String INICIAR = "botoes/iniciar";
+	public final static String NAO = "botoes/nao";
+	public final static String RANKING = "botoes/ranking";
+	public final static String SAIR = "botoes/sair";
+	public final static String SIM = "botoes/sim";
+	public final static String TIRAR_FOTO = "botoes/tirarFoto";
 
 	public final static String SELECIONADO = "_selecionado";
 
