@@ -42,7 +42,7 @@ public class Configuracao extends Form implements CommandListener {
 
 	public Configuracao(PuzzleMIDlet midlet) {
 		super(Mensagens.CONFIGURACAO);
-		
+
 		this.midlet = midlet;
 		this.midlet.setDisplayable(this);
 
@@ -54,16 +54,18 @@ public class Configuracao extends Form implements CommandListener {
 		this.setCommandListener(this);
 
 		this.audio = new ChoiceGroup(Mensagens.AUDIO, Choice.EXCLUSIVE);
-		
+
 		Image audioOn = null;
 		Image audioOff = null;
 		try {
-			audioOn = Image.createImage(imagens.getCaminhoImagem(Imagens.AUDIO_ON));
-			audioOff = Image.createImage(imagens.getCaminhoImagem(Imagens.AUDIO_OFF));
+			audioOn = Image.createImage(imagens
+					.getCaminhoImagem(Imagens.AUDIO_ON));
+			audioOff = Image.createImage(imagens
+					.getCaminhoImagem(Imagens.AUDIO_OFF));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		this.audio.append(Mensagens.LIGADO, audioOn);
 		this.audio.append(Mensagens.DESLIGADO, audioOff);
 		this.append(audio);
@@ -91,9 +93,9 @@ public class Configuracao extends Form implements CommandListener {
 				dadosJogo.salvarQtdPecasJogo(pecas.getValue());
 				Display.getDisplay(midlet).setCurrent(new Menu(midlet));
 			}
-			if(audio.getSelectedIndex() == 0){
+			if (audio.getSelectedIndex() == 0) {
 				this.midlet.getAudio().start();
-			}else{
+			} else {
 				this.midlet.getAudio().stop();
 			}
 		}

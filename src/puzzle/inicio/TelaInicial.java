@@ -6,7 +6,10 @@ package puzzle.inicio;
 import java.io.IOException;
 
 import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
@@ -21,15 +24,23 @@ import puzzle.util.Mensagens;
  * 
  * @author David Almeida Pitanguy data 10/09/2010
  */
-public class TelaInicial extends Canvas {
+public class TelaInicial extends Canvas implements CommandListener {
 
 	private PuzzleMIDlet midlet;
 
+	private Command bSomOn;
+	private Command bSomOff;
+
 	private Image fundo;
+	private Image somOn;
+	private Image somOff;
 
 	private Imagens imagens;
-
 	private ImagemUtil imagemUtil;
+
+	private int largAltImgSom = getWidth() / 10;
+
+	private boolean selecionarSom = true;
 
 	/**
 	 * @param midlet
@@ -41,11 +52,25 @@ public class TelaInicial extends Canvas {
 		this.imagemUtil = new ImagemUtil();
 
 		try {
-			Image image = Image.createImage(imagens
-					.getCaminhoImagem(Imagens.FUNDO));
+			fundo = Image.createImage(imagens.getCaminhoImagem(Imagens.FUNDO));
+			somOn = Image.createImage(imagens
+					.getCaminhoImagem(Imagens.AUDIO_ON));
+			somOff = Image.createImage(imagens
+					.getCaminhoImagem(Imagens.AUDIO_OFF));
 
-			fundo = imagemUtil.redimencionarImagem(image, getWidth(),
+			fundo = imagemUtil.redimencionarImagem(fundo, getWidth(),
 					getHeight());
+			somOn = imagemUtil.redimencionarImagem(somOn, largAltImgSom,
+					largAltImgSom);
+			somOff = imagemUtil.redimencionarImagem(somOff, largAltImgSom,
+					largAltImgSom);
+
+			bSomOn = new Command(Mensagens.LIGADO, Command.EXIT, 1);
+			bSomOff = new Command(Mensagens.DESLIGADO, Command.ITEM, 1);
+
+			this.addCommand(bSomOn);
+			this.addCommand(bSomOff);
+			this.setCommandListener(this);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -62,8 +87,16 @@ public class TelaInicial extends Canvas {
 		g.drawImage(fundo, getWidth() / 2, getHeight() / 2, Graphics.HCENTER
 				| Graphics.VCENTER);
 
-		g.drawString(Mensagens.START, getWidth() / 2, getHeight(),
-				Graphics.HCENTER | Graphics.BOTTOM);
+		if (selecionarSom) {
+
+			g.drawImage(somOn, 0, getHeight(), Graphics.LEFT | Graphics.BOTTOM);
+			g.drawImage(somOff, getWidth(), getHeight(), Graphics.RIGHT
+					| Graphics.BOTTOM);
+
+		} else {
+			g.drawString(Mensagens.START, getWidth() / 2, getHeight(),
+					Graphics.HCENTER | Graphics.BOTTOM);
+		}
 
 	}
 
@@ -73,17 +106,11 @@ public class TelaInicial extends Canvas {
 	 * @see javax.microedition.lcdui.Canvas#keyPressed(int)
 	 */
 	protected void keyPressed(int keyCode) {
-
-		System.out.println(keyCode);
-		System.out.println(getGameAction(keyCode));
-		System.out.println(Canvas.LEFT);
-		System.out.println(Canvas.RIGHT);
-		
-		if ((keyCode == Canvas.KEY_NUM5)
-				|| (getGameAction(keyCode) == Canvas.FIRE)) {
-			iniciarMenu();
-		}
-
+		if (!selecionarSom)
+			if ((keyCode == Canvas.KEY_NUM5)
+					|| (getGameAction(keyCode) == Canvas.FIRE)) {
+				iniciarMenu();
+			}
 	}
 
 	/*
@@ -92,7 +119,16 @@ public class TelaInicial extends Canvas {
 	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
 	 */
 	protected void pointerPressed(int x, int y) {
-		iniciarMenu();
+		if (selecionarSom) {
+			if ((x <= largAltImgSom) && (y >= getHeight() - largAltImgSom)) {
+				setarEstadoSom(true);
+			} else if ((x >= getWidth() - largAltImgSom)
+					&& (y >= getHeight() - largAltImgSom)) {
+				setarEstadoSom(false);
+			}
+		} else {
+			iniciarMenu();
+		}
 	}
 
 	/**
@@ -100,5 +136,38 @@ public class TelaInicial extends Canvas {
 	 */
 	private void iniciarMenu() {
 		Display.getDisplay(this.midlet).setCurrent(new Menu(this.midlet));
+	}
+
+	/**
+	 * @param ligado
+	 *            Estado para ligar ou ñ o som
+	 */
+	private void setarEstadoSom(boolean ligado) {
+		if (ligado) {
+			this.midlet.getAudio().start();
+		}
+		selecionarSom = false;
+
+		this.removeCommand(bSomOn);
+		this.removeCommand(bSomOff);
+
+		repaint();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.CommandListener#commandAction(javax.microedition
+	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
+	 */
+	public void commandAction(Command c, Displayable d) {
+		if (selecionarSom) {
+			if (c == bSomOn) {
+				setarEstadoSom(true);
+			} else if (c == bSomOff) {
+				setarEstadoSom(false);
+			}
+		}
 	}
 }

@@ -3,17 +3,17 @@
  */
 package puzzle.ranking;
 
-
 /**
- * @author David Almeida Pitanguy
- * data 13/09/2010
+ * Dados do ranking do jogo.
+ * 
+ * @author David Almeida Pitanguy data 13/09/2010
  */
 public class DadosRanking {
 
 	private String nome;
 	private long tempo;
 	private long movimentos;
-	
+
 	public DadosRanking(String nome, long tempo, long movimentos) {
 		super();
 		this.nome = nome;
@@ -41,14 +41,14 @@ public class DadosRanking {
 	public long getMovimentos() {
 		return movimentos;
 	}
-	
-	public String getTempoFormatado(){
+
+	public String getTempoFormatado() {
 		long totalSegundos = getTempo() / 1000;
 		long segundos = totalSegundos % 60;
 		long minutos = totalSegundos / 60;
 		long horas = minutos / 60;
 		minutos = minutos % 60;
-		
+
 		return horas + "h" + minutos + "m" + segundos + "s";
 	}
 }

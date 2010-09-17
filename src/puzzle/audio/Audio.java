@@ -10,6 +10,8 @@ import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 
 /**
+ * Cuida da parte de som do jogo.
+ * 
  * @author David Almeida Pitanguy data 17/09/2010
  */
 public class Audio implements Runnable {
@@ -19,7 +21,7 @@ public class Audio implements Runnable {
 	private final String AUDIO = "/sons/bach.mid";
 	private final String TIPO_AUDIO = "audio/midi";
 
-	private boolean tocando = true;
+	private boolean tocando = false;
 
 	public Audio() {
 		new Thread(this).start();

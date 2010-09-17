@@ -16,6 +16,7 @@ import puzzle.foto.Fotos;
 import puzzle.principal.Puzzle;
 import puzzle.principal.PuzzleMIDlet;
 import puzzle.ranking.Ranking;
+import puzzle.util.ImagemUtil;
 import puzzle.util.Imagens;
 import puzzle.util.Mensagens;
 
@@ -32,13 +33,10 @@ public class Menu extends Canvas {
 	private final int MENU_CONFIRMACAO = 1;
 
 	private Imagens imagens;
+	private ImagemUtil imagemUtil;
 
 	private int menuSelecionado = MENU_PRINCIPAL;
 	private int itemSelecionado = 0;
-
-	private int larguraItem = 150;
-	private int alturaItem = 20;
-	private int margemItem = alturaItem / 2;
 
 	// Guarda os menus do jogo
 	private String menu[][] = {
@@ -46,11 +44,58 @@ public class Menu extends Canvas {
 					Imagens.TIRAR_FOTO, Imagens.CREDITOS, Imagens.SAIR },
 			{ Imagens.SIM, Imagens.NAO } };
 
+	private int larguraItem = (getWidth() / 3) * 2;
+	private int alturaItem = getHeight() / (menu[MENU_PRINCIPAL].length * 2);
+	private int margemItem = alturaItem / 2;
+
+	private Image[][] imagensMenu;
+	private Image[][] imagensSelecionadoMenu;
+
 	public Menu(PuzzleMIDlet midlet) {
 		this.midlet = midlet;
 		this.midlet.setDisplayable(this);
 
 		this.imagens = new Imagens();
+		this.imagemUtil = new ImagemUtil();
+
+		carregarImagensMenus();
+	}
+
+	/**
+	 * Carrega e redimenciona as imagens dos menus.
+	 */
+	private void carregarImagensMenus() {
+		imagensMenu = new Image[menu.length][];
+		imagensSelecionadoMenu = new Image[menu.length][];
+
+		for (int i = 0; i < menu.length; i++) {
+			imagensMenu[i] = new Image[menu[i].length];
+			imagensSelecionadoMenu[i] = new Image[menu[i].length];
+
+			for (int j = 0; j < menu[i].length; j++) {
+
+				try {
+
+					Image imagem = Image.createImage(imagens
+							.getCaminhoImagem(menu[i][j]));
+
+					Image imagemSelecionada = Image
+							.createImage(imagens.getCaminhoImagem(menu[i][j]
+									+ Imagens.SELECIONADO));
+
+					imagensMenu[i][j] = imagemUtil.redimencionarImagem(imagem,
+							larguraItem, alturaItem);
+
+					imagensSelecionadoMenu[i][j] = imagemUtil
+							.redimencionarImagem(imagemSelecionada,
+									larguraItem, alturaItem);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		}
 	}
 
 	/*
@@ -68,22 +113,14 @@ public class Menu extends Canvas {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		for (int i = 0; i < menu[menuSelecionado].length; i++) {
-			Image image = null;
 
-			try {
-				if (i == itemSelecionado) {
-					image = Image.createImage(imagens
-							.getCaminhoImagem(menu[menuSelecionado][i]
-									+ Imagens.SELECIONADO));
-				} else {
-					image = Image.createImage(imagens
-							.getCaminhoImagem(menu[menuSelecionado][i]));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (i == itemSelecionado) {
+				g.drawImage(imagensSelecionadoMenu[menuSelecionado][i], x, y
+						+ margemItem, Graphics.VCENTER | Graphics.HCENTER);
+			} else {
+				g.drawImage(imagensMenu[menuSelecionado][i], x, y + margemItem,
+						Graphics.VCENTER | Graphics.HCENTER);
 			}
-
-			g.drawImage(image, x, y, Graphics.VCENTER | Graphics.HCENTER);
 
 			y += alturaItem + margemItem;
 		}

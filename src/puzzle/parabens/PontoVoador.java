@@ -1,8 +1,9 @@
 package puzzle.parabens;
 
 /**
- * @author David Almeida Pitanguy
- * data 10/09/2010
+ * Classe responsavel pelos atributos do pontos da tela de parabens.
+ * 
+ * @author David Almeida Pitanguy data 10/09/2010
  */
 public class PontoVoador {
 
@@ -10,36 +11,39 @@ public class PontoVoador {
 	public int x;
 	public int y;
 	private int oscilacao = 0;
-	
+
 	private final int maxOscilacao = 10;
 	private boolean esquerda = false;
-	
+
 	private int altura;
-	
+
 	public PontoVoador(int cor, int x, int y, int height) {
 		this.cor = cor;
 		this.x = x;
 		this.y = y;
-		
+
 		this.altura = height;
 	}
-	
-	public void atualizar(){
-		y-=2;
-		
-		//se chegar ao topo reinicia
-		if(y < 0){
+
+	/**
+	 * Atualiza a posição do ponto.
+	 */
+	public void atualizar() {
+		y -= 2;
+
+		// se chegar ao topo reinicia
+		if (y < 0) {
 			y = altura;
 		}
-		
-		//oscila da esquerda para a direita
-		if (esquerda){
+
+		// oscila da esquerda para a direita
+		if (esquerda) {
 			x--;
-		}else{
+		} else {
 			x++;
 		}
 		oscilacao++;
-		if(oscilacao >= maxOscilacao){
+		if (oscilacao >= maxOscilacao) {
 			oscilacao = 0;
 			esquerda = !esquerda;
 		}

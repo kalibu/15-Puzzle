@@ -9,6 +9,8 @@ import puzzle.audio.Audio;
 import puzzle.inicio.TelaInicial;
 
 /**
+ * Classe responsavel pelo MIDlet que o processo que roda no celular.
+ * 
  * @author David Almeida Pitanguy data 06/09/2010
  */
 public class PuzzleMIDlet extends MIDlet {

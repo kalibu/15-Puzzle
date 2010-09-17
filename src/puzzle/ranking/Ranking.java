@@ -67,8 +67,11 @@ public class Ranking extends Canvas implements CommandListener {
 				+ dadosJogo.getQtdPcsJogo() + " peças"));
 	}
 
-	/**
-	 * @param g
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.Canvas#paint(javax.microedition.lcdui.Graphics)
 	 */
 	protected void paint(Graphics g) {
 

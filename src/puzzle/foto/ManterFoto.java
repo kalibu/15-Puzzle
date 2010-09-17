@@ -90,9 +90,9 @@ public class ManterFoto {
 	 *            Id da foto a ser deletada.
 	 */
 	public void deletaFoto(int foto) {
-				
+
 		verificaFotoSelecionada(foto);
-		
+
 		// soma 1 a imagem pois o banco começa em 1
 		foto += 1;
 
@@ -100,7 +100,7 @@ public class ManterFoto {
 			byte[][] records;
 
 			RecordStore rs = RecordStore.openRecordStore(BANCO, true);
-			
+
 			records = new byte[rs.getNumRecords()][];
 
 			// carrega tds os records em um array e depois salva o mesmo, para
@@ -108,7 +108,7 @@ public class ManterFoto {
 			for (int i = 1; i <= rs.getNumRecords(); i++) {
 				records[i - 1] = rs.getRecord(i);
 			}
-			
+
 			rs.closeRecordStore();
 
 			// deleta rs antigo
@@ -116,7 +116,7 @@ public class ManterFoto {
 
 			// abre novo rs para salvar novas fotos
 			rs = RecordStore.openRecordStore(BANCO, true);
-			
+
 			for (int i = 0; i < records.length; i++) {
 				if (i != (foto - 1)) {
 					rs.addRecord(records[i], 0, records[i].length);
@@ -178,7 +178,7 @@ public class ManterFoto {
 		DadosJogo dadosJogo = new DadosJogo();
 
 		int numImagemSelecionada = dadosJogo.getNumImagemSelecionada();
-		
+
 		if (numImagemSelecionada == foto) {
 			dadosJogo.salvarImagemSelecionada(0);
 		}

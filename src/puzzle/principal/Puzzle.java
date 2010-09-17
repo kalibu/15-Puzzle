@@ -79,7 +79,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	public Puzzle(PuzzleMIDlet midlet) {
 		this.midlet = midlet;
 		this.midlet.setDisplayable(this);
-		
+
 		dadosJogo = new DadosJogo();
 
 		setTitle(Mensagens.TITULO);
@@ -126,7 +126,7 @@ public class Puzzle extends Canvas implements CommandListener {
 		imagem = new ImagemUtil().redimencionarImagem(imagem, larguraPeca
 				* dadosJogo.getQtdPcsJogo(),
 				alturaPeca * dadosJogo.getQtdPcsJogo());
-		
+
 		desenho = new TiledLayer(dadosJogo.getQtdPcsJogo(),
 				dadosJogo.getQtdPcsJogo(), imagem, larguraPeca, alturaPeca);
 	}

@@ -17,7 +17,7 @@ public class Movimentos {
 	private long movimentosJog = 0;
 
 	private DadosJogo dadosJogo;
-	
+
 	// Quantidade de movimentos a fazer para embaralhar
 	public final int VEZES_EMBARALHAR = 10000;
 
@@ -42,7 +42,8 @@ public class Movimentos {
 
 		alterarPosicaoPecas(codeGameAction);
 
-		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(), dadosJogo.getQtdPcsJogo())) {
+		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(),
+				dadosJogo.getQtdPcsJogo())) {
 			jogo.ganhou();
 		}
 	}
@@ -169,7 +170,8 @@ public class Movimentos {
 	 */
 	public void moverPecaPorClique(int x, int y) {
 
-		if ((x < dadosJogo.getQtdPcsJogo() - 1) && (jogo.getPecas()[y][x + 1] == 0)) {
+		if ((x < dadosJogo.getQtdPcsJogo() - 1)
+				&& (jogo.getPecas()[y][x + 1] == 0)) {
 			realizaJogada(Canvas.RIGHT);
 		} else if ((x > 0) && (jogo.getPecas()[y][x - 1] == 0)) {
 			realizaJogada(Canvas.LEFT);

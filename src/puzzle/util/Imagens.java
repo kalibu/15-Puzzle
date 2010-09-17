@@ -30,6 +30,11 @@ public class Imagens {
 	public final static String CAMINHO = "/";
 	private final String TIPO_IMAGEM = ".png";
 
+	/**
+	 * @param imagem
+	 *            Nome da imagem a carregar o caminho.
+	 * @return Retorna a imagem com seu respectivo caminho.
+	 */
 	public String getCaminhoImagem(String imagem) {
 		return CAMINHO + imagem + TIPO_IMAGEM;
 	}
