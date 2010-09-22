@@ -1,0 +1,8 @@
+MIDlet-1: 15-Puzzle,/15-puzzle.png,puzzle.principal.PuzzleMIDlet
+MIDlet-Jar-Size: 86147
+MIDlet-Jar-URL: 15_Puzzle.jar
+MIDlet-Name: 15 Puzzle
+MIDlet-Vendor: David Almeida Pitanguy
+MIDlet-Version: 1.0.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0

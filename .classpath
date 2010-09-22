@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
-	<classpathentry kind="con" path="J2MELIB"/>
+	<classpathentry exported="true" kind="con" path="J2MELIB"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

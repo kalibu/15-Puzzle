@@ -254,15 +254,21 @@ public class Menu extends Canvas {
 		// trata o touch dos menus
 		int xi = (getWidth() / 2) - (larguraItem / 2);
 		int yi = getAlturaPintaItem(menu[menuSelecionado].length)
-				- (alturaItem / 2);
+				- (alturaItem / 2) + margemItem;
 
 		for (int i = 0; i < menu[menuSelecionado].length; i++) {
 			int xf = xi + larguraItem;
 			int yf = yi + alturaItem;
 
 			if ((xi <= x) && (x <= xf) && (yi <= y) && (y <= yf)) {
-				itemSelecionado = i;
-				menus();
+
+				// se o menu selecionado for o que estiver clicado, ativa caso
+				// contrario so seleciona ele.
+				if (itemSelecionado == i) {
+					menus();
+				} else {
+					itemSelecionado = i;
+				}
 				repaint();
 			}
 

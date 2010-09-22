@@ -22,7 +22,7 @@ public class Mensagens {
 	public static final String RANKING_DIVISOR = " <-> ";
 	public static final String RANKING_POSICAO = "º - ";
 	public static final String TITULO = "15-Puzzle";
-	public static final String TITULO_RANKING = "Nome <---> Jogadas <---> Tempo";
+	public static final String TITULO_RANKING = "Posº - Nome <-> Jogadas <-> Tempo";
 
 	// Botões
 	public static final String DEFINIR = "Definir como padrão";
