@@ -48,6 +48,8 @@ public class DadosRanking {
 		long minutos = totalSegundos / 60;
 		long horas = minutos / 60;
 		minutos = minutos % 60;
+		
+		horas = horas%24;
 
 		return horas + "h" + minutos + "m" + segundos + "s";
 	}

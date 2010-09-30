@@ -14,7 +14,12 @@ import puzzle.util.DadosJogo;
 public class Movimentos {
 
 	private Puzzle jogo;
+	private Animacao animacao;
 	private long movimentosJog = 0;
+	private int pcMovX;
+	private int pcMovY;
+
+	private int dir;
 
 	private DadosJogo dadosJogo;
 
@@ -25,10 +30,15 @@ public class Movimentos {
 	 * @param jogo
 	 *            Recebe o jogo do qual vai tratar os movimentos.
 	 */
-	public Movimentos(Puzzle jogo) {
+	public Movimentos(Puzzle jogo, Animacao animacao) {
 		this.jogo = jogo;
+		
+		this.animacao = animacao;
 
 		this.dadosJogo = new DadosJogo();
+
+		this.pcMovX = jogo.getPosicaoDoZeroX();
+		this.pcMovY = jogo.getPosicaoDoZeroY();
 	}
 
 	/**
@@ -38,9 +48,9 @@ public class Movimentos {
 	 *            Codigo da ação a ser realizada.
 	 */
 	public void realizaJogada(int codeGameAction) {
-		movimentosJog++;
-
 		alterarPosicaoPecas(codeGameAction);
+
+		animacao.animar(dir);
 
 		if (jogo.getJogoUtils().isGanhou(jogo.getPecas(),
 				dadosJogo.getQtdPcsJogo())) {
@@ -55,6 +65,10 @@ public class Movimentos {
 	 *            Codigo da ação a ser realizada.
 	 */
 	private void alterarPosicaoPecas(int codeGameAction) {
+
+		this.pcMovX = jogo.getPosicaoDoZeroX();
+		this.pcMovY = jogo.getPosicaoDoZeroY();
+
 		switch (codeGameAction) {
 		case (Canvas.UP):
 		case (Canvas.KEY_NUM2): {
@@ -63,6 +77,10 @@ public class Movimentos {
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX() + 1][jogo.getPosicaoDoZeroY()];
 				jogo.setPosicaoDoZeroX(jogo.getPosicaoDoZeroX() + 1);
+
+				dir = Canvas.UP;
+				
+				movimentosJog++;
 			}
 			break;
 		}
@@ -73,6 +91,10 @@ public class Movimentos {
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX() - 1][jogo.getPosicaoDoZeroY()];
 				jogo.setPosicaoDoZeroX(jogo.getPosicaoDoZeroX() - 1);
+
+				dir = Canvas.DOWN;
+				
+				movimentosJog++;
 			}
 			break;
 		}
@@ -83,6 +105,10 @@ public class Movimentos {
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX()][jogo.getPosicaoDoZeroY() + 1];
 				jogo.setPosicaoDoZeroY(jogo.getPosicaoDoZeroY() + 1);
+
+				dir = Canvas.LEFT;
+				
+				movimentosJog++;
 			}
 			break;
 		}
@@ -93,6 +119,10 @@ public class Movimentos {
 						.getPosicaoDoZeroY()] = jogo.getPecas()[jogo
 						.getPosicaoDoZeroX()][jogo.getPosicaoDoZeroY() - 1];
 				jogo.setPosicaoDoZeroY(jogo.getPosicaoDoZeroY() - 1);
+
+				dir = Canvas.RIGHT;
+				
+				movimentosJog++;
 			}
 			break;
 		}
@@ -129,6 +159,8 @@ public class Movimentos {
 
 			ultimo = atual;
 		}
+		
+		movimentosJog = 0;
 
 		jogo.repaint();
 	}
@@ -189,6 +221,20 @@ public class Movimentos {
 	 */
 	public long getMovimentosJog() {
 		return movimentosJog;
+	}
+
+	/**
+	 * @return the pcMovX
+	 */
+	public int getPcMovX() {
+		return pcMovX;
+	}
+
+	/**
+	 * @return the pcMovY
+	 */
+	public int getPcMovY() {
+		return pcMovY;
 	}
 
 }

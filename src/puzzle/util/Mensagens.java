@@ -27,10 +27,12 @@ public class Mensagens {
 	// Botões
 	public static final String DEFINIR = "Definir como padrão";
 	public static final String DELETAR = "Deletar";
+	public static final String MOSTRAR_DADOS = "Mostrar dados";
 	public static final String DESENHA_FOTO = "Mostrar foto";
 	public static final String DESENHA_LINHA = "Mostrar linhas";
 	public static final String DESENHA_NUMERO = "Mostrar numeros";
 	public static final String EMBARALHAR = "Embaralhar";
+	public static final String NAO_MOSTRAR_DADOS = "Não mostrar dados";
 	public static final String NAO_DESENHA_FOTO = "Não mostrar foto";
 	public static final String NAO_DESENHA_LINHA = "Não mostrar linhas";
 	public static final String NAO_DESENHA_NUMERO = "Não mostrar numeros";
@@ -43,9 +45,10 @@ public class Mensagens {
 
 	// Mensagens
 	public static final String DELETAR_FOTO_PADRAO = "Fotos padrões não podem ser deletadas.";
-	public static final String ERRO_NAO_SUPORTADO = "Desculpe, este aparelho não possui suporte a esta opção.";
-	public static final String LIGADO = "Ligado";
 	public static final String DESLIGADO = "Desligado";
+	public static final String ERRO_NAO_SUPORTADO = "Desculpe, este aparelho não possui suporte a esta opção.";
+	public static final String JOGADAS = "xJog.";
+	public static final String LIGADO = "Ligado";
 	public final static String MSG_CREDITOS = "Desenvolvido por: \nDavid Almeida Pitanguy";
 	public static final String NOME = "Nome";
 	public static final String NOME_PADRAO = "15-Puzzle";

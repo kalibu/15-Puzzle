@@ -9,6 +9,7 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.game.Sprite;
 import javax.microedition.lcdui.game.TiledLayer;
 
 import puzzle.foto.ManterFoto;
@@ -36,8 +37,10 @@ public class Puzzle extends Canvas implements CommandListener {
 	public final int larguraPeca;
 
 	// Cores utilizadas
+	private int corDados = 0xFF0000;
 	private int corFundo = 0xFFFFFF;
-	private int corLinha = 0xFF0000;
+	private int corLinha = 0x000000;
+	private int corNumero = 0xFF0000;
 
 	private PuzzleMIDlet midlet;
 
@@ -45,8 +48,10 @@ public class Puzzle extends Canvas implements CommandListener {
 	private JogoUtils jogoUtils;
 	private Movimentos movimentos;
 	private DadosJogo dadosJogo;
+	private Animacao animacao;
 
 	// Botões
+	private Command mostraDados;
 	private Command desenhaFoto;
 	private Command desenhaLinha;
 	private Command desenhaNumero;
@@ -66,9 +71,12 @@ public class Puzzle extends Canvas implements CommandListener {
 
 	private long tempoJog = 0;
 
+	private boolean mostrarDados = true;
 	private boolean desenharFoto = true;
 	private boolean desenharLinha = true;
 	private boolean desenharNumero = true;
+
+	private Image imagemCompletaJogo;
 
 	/**
 	 * Construtor responsavel por fazer todo o necessario para inicializar o
@@ -82,14 +90,16 @@ public class Puzzle extends Canvas implements CommandListener {
 
 		dadosJogo = new DadosJogo();
 
+		animacao = new Animacao(this);
+
 		setTitle(Mensagens.TITULO);
 
 		jogoUtils = new JogoUtils();
-		movimentos = new Movimentos(this);
+		movimentos = new Movimentos(this, animacao);
 
 		carregarOpcoesJogo();
-		embaralhar = new Command(Mensagens.EMBARALHAR, Command.ITEM, 3);
-		sair = new Command(Mensagens.SAIR, Command.ITEM, 4);
+		embaralhar = new Command(Mensagens.EMBARALHAR, Command.ITEM, 5);
+		sair = new Command(Mensagens.SAIR, Command.ITEM, 6);
 
 		addCommand(embaralhar);
 		addCommand(sair);
@@ -112,7 +122,6 @@ public class Puzzle extends Canvas implements CommandListener {
 		carregarDesenho();
 
 		this.tempoJog = Calendar.getInstance().getTime().getTime();
-
 	}
 
 	/**
@@ -120,15 +129,16 @@ public class Puzzle extends Canvas implements CommandListener {
 	 */
 	private void carregarDesenho() {
 
-		Image imagem = new ManterFoto().carregarFoto(dadosJogo
+		imagemCompletaJogo = new ManterFoto().carregarFoto(dadosJogo
 				.getNumImagemSelecionada());
 
-		imagem = new ImagemUtil().redimencionarImagem(imagem, larguraPeca
-				* dadosJogo.getQtdPcsJogo(),
+		imagemCompletaJogo = new ImagemUtil().redimencionarImagem(
+				imagemCompletaJogo, larguraPeca * dadosJogo.getQtdPcsJogo(),
 				alturaPeca * dadosJogo.getQtdPcsJogo());
 
 		desenho = new TiledLayer(dadosJogo.getQtdPcsJogo(),
-				dadosJogo.getQtdPcsJogo(), imagem, larguraPeca, alturaPeca);
+				dadosJogo.getQtdPcsJogo(), imagemCompletaJogo, larguraPeca,
+				alturaPeca);
 	}
 
 	/*
@@ -160,6 +170,9 @@ public class Puzzle extends Canvas implements CommandListener {
 			desenhar(g, NUMEROS);
 		}
 
+		if (mostrarDados) {
+			mostrarDados(g);
+		}
 	}
 
 	/**
@@ -178,19 +191,61 @@ public class Puzzle extends Canvas implements CommandListener {
 				switch (itemDesenhar) {
 				// desenhar imagem
 				case DESENHO: {
-					desenho.setCell(pecaY, pecaX, pecas[pecaX][pecaY]);
+					if ((pecas[pecaX][pecaY] != 0)
+							&& (pecaX == movimentos.getPcMovX())
+							&& (pecaY == movimentos.getPcMovY())) {
+
+						int x = (pecas[pecaX][pecaY] - 1)
+								% dadosJogo.getQtdPcsJogo();
+						int y = (pecas[pecaX][pecaY] - 1)
+								/ dadosJogo.getQtdPcsJogo();
+
+						g.drawImage(Image.createImage(imagemCompletaJogo, x
+								* larguraPeca, y * alturaPeca, larguraPeca,
+								alturaPeca, Sprite.TRANS_NONE), j
+								+ animacao.deslocamentoX, i
+								+ animacao.deslocamentoY, Graphics.LEFT
+								| Graphics.TOP);
+
+					} else {
+						desenho.setCell(pecaY, pecaX, pecas[pecaX][pecaY]);
+					}
+
 					break;
 				}
 					// desenha as linhas
 				case LINHAS: {
-					g.drawRect(j, i, larguraPeca, alturaPeca);
+					g.setColor(corLinha);
+					
+					if (pecas[pecaX][pecaY] != 0) {
+						if ((pecaX == movimentos.getPcMovX())
+								&& (pecaY == movimentos.getPcMovY())) {
+							g.drawRect(j + animacao.deslocamentoX, i
+									+ animacao.deslocamentoY, larguraPeca,
+									alturaPeca);
+						} else {
+							g.drawRect(j, i, larguraPeca, alturaPeca);
+						}
+					}
 					break;
 				}
 					// desenhas os numeros
 				case NUMEROS: {
+					g.setColor(corNumero);
+					
 					if (pecas[pecaX][pecaY] != 0) {
-						g.drawString(Integer.toString(pecas[pecaX][pecaY]),
-								j + 3, i, Graphics.LEFT | Graphics.TOP);
+
+						if ((pecaX == movimentos.getPcMovX())
+								&& (pecaY == movimentos.getPcMovY())) {
+							g.drawString(Integer.toString(pecas[pecaX][pecaY]),
+									j + 3 + animacao.deslocamentoX, i
+											+ animacao.deslocamentoY,
+									Graphics.LEFT | Graphics.TOP);
+						} else {
+							g.drawString(Integer.toString(pecas[pecaX][pecaY]),
+									j + 3, i, Graphics.LEFT | Graphics.TOP);
+						}
+
 					}
 					break;
 				}
@@ -200,6 +255,18 @@ public class Puzzle extends Canvas implements CommandListener {
 			}
 			pecaY++;
 		}
+	}
+
+	/**
+	 * Carregar dados do jogador.
+	 * 
+	 * @param g
+	 */
+	private void mostrarDados(Graphics g) {
+		g.setColor(corDados);
+
+		g.drawString(movimentos.getMovimentosJog() + Mensagens.JOGADAS, 10, 10,
+				Graphics.LEFT | Graphics.TOP);
 	}
 
 	/*
@@ -228,6 +295,11 @@ public class Puzzle extends Canvas implements CommandListener {
 			desenharFoto = !desenharFoto;
 			this.removeCommand(desenhaFoto);
 			carregaOpcaoDesenharFoto();
+			repaint();
+		} else if (c == this.mostraDados) {
+			mostrarDados = !mostrarDados;
+			this.removeCommand(mostraDados);
+			carregaOpcaoMostrarDados();
 			repaint();
 		}
 	}
@@ -303,9 +375,19 @@ public class Puzzle extends Canvas implements CommandListener {
 	 * Carrega as opcoes do jogo de acordo com a escolha do jogador
 	 */
 	private void carregarOpcoesJogo() {
+		carregaOpcaoMostrarDados();
 		carregaOpcaoDesenharFoto();
 		carregaOpcaoDesenharLinhas();
 		carregaOpcaoDesenharNumeros();
+	}
+
+	/**
+	 * Carrega a opcao de mostrar dados.
+	 */
+	private void carregaOpcaoMostrarDados() {
+		mostraDados = new Command(mostrarDados ? Mensagens.NAO_MOSTRAR_DADOS
+				: Mensagens.MOSTRAR_DADOS, Command.ITEM, 1);
+		addCommand(mostraDados);
 	}
 
 	/**
@@ -314,7 +396,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	private void carregaOpcaoDesenharNumeros() {
 		desenhaNumero = new Command(
 				desenharNumero ? Mensagens.NAO_DESENHA_NUMERO
-						: Mensagens.DESENHA_NUMERO, Command.ITEM, 1);
+						: Mensagens.DESENHA_NUMERO, Command.ITEM, 2);
 		addCommand(desenhaNumero);
 	}
 
@@ -323,7 +405,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	 */
 	private void carregaOpcaoDesenharLinhas() {
 		desenhaLinha = new Command(desenharLinha ? Mensagens.NAO_DESENHA_LINHA
-				: Mensagens.DESENHA_LINHA, Command.ITEM, 2);
+				: Mensagens.DESENHA_LINHA, Command.ITEM, 3);
 		addCommand(desenhaLinha);
 	}
 
@@ -332,7 +414,7 @@ public class Puzzle extends Canvas implements CommandListener {
 	 */
 	private void carregaOpcaoDesenharFoto() {
 		desenhaFoto = new Command(desenharFoto ? Mensagens.NAO_DESENHA_FOTO
-				: Mensagens.DESENHA_FOTO, Command.ITEM, 3);
+				: Mensagens.DESENHA_FOTO, Command.ITEM, 4);
 		addCommand(desenhaFoto);
 	}
 

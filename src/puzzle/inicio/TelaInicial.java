@@ -66,7 +66,7 @@ public class TelaInicial extends Canvas implements CommandListener {
 					largAltImgSom);
 
 			bSomOn = new Command(Mensagens.LIGADO, Command.EXIT, 1);
-			bSomOff = new Command(Mensagens.DESLIGADO, Command.ITEM, 1);
+			bSomOff = new Command(Mensagens.DESLIGADO, Command.SCREEN, 2);
 
 			this.addCommand(bSomOn);
 			this.addCommand(bSomOff);
